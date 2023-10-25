@@ -7,12 +7,13 @@ import { Button } from "@nextui-org/button";
 
 import Link from "next/link";
 import React, { useState } from "react";
+import { NAVBAR_HEIGHT } from "./sizes";
 
 type Props = {};
 
 export default function AlvandiNavbar({}: Props) {
   return (
-    <Navbar onMenuOpenChange={()=>{}}>
+    <Navbar isBlurred onMenuOpenChange={()=>{}} className={`h-[${NAVBAR_HEIGHT}]`}>
       <NavbarContent>
         <NavbarBrand>
           <p className="font-bold text-inherit">DYLAN ALVANDI</p>
