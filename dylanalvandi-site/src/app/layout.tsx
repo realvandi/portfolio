@@ -1,22 +1,32 @@
-import './globals.css'
-import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
+import { AppBar } from "@mui/material";
+import "./globals.css";
+import type { Metadata } from "next";
+import { Inter } from "next/font/google";
+import { NextUIProvider } from "@nextui-org/react";
+import { Navbar } from "@nextui-org/navbar";
+import { Providers } from "./providers";
+import AlvandiNavbar from "./AlvandiNavbar";
 
-const inter = Inter({ subsets: ['latin'] })
+const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: 'Dylan Alvandi',
-  description: 'Site of Dylan Alvandi',
-}
+  title: "Dylan Alvandi",
+  description: "Site of Dylan Alvandi",
+};
 
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode
+  children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <body className={inter.className}>{children}</body>
+    <html lang="en" className="dark">
+      <body className={inter.className}>
+        <Providers>
+          <AlvandiNavbar/>
+          {children}
+        </Providers>
+      </body>
     </html>
-  )
+  );
 }
