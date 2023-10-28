@@ -1,11 +1,56 @@
 import { useFrame } from "@react-three/fiber";
-import React, { useRef } from "react";
-import { Mesh } from "three";
+import React, { useRef, useMemo, useState } from "react";
+import { Mesh, CylinderGeometry, Vector3, Quaternion } from "three";
 
-type Props = {};
+const Spikes = ({ radius }: any) => {
+  const spikes = useRef<Mesh[]>([]);
+  const geometry = useMemo(() => new CylinderGeometry(0, 0.4, 0.2, 7), []);
 
-export default function Alvandi3dComponent({}: Props) {
-  const mesh = useRef<Mesh>(null);
+  useFrame(({ clock }) => {
+    spikes.current.forEach((spike, i) => {
+      const scale = 1 + Math.sin(clock.getElapsedTime() * 5 + i) * 0.3;
+      if (spike) {
+        spike.scale.set(1, scale, 1);
+      }
+    });
+  });
+
+  const positions = [...Array(40)].map(() =>
+    new Vector3(
+      (Math.random() - 0.5) * 2,
+      (Math.random() - 0.5) * 2,
+      (Math.random() - 0.5) * 2
+    )
+      .normalize()
+      .multiplyScalar(radius)
+  );
+
+  return positions.map((position, index) => {
+    const up = new Vector3(0, 1, 0);
+    const quaternion = new Quaternion().setFromUnitVectors(
+      up,
+      position.clone().normalize()
+    );
+
+    return (
+      <mesh
+        key={index}
+        position={position}
+        quaternion={quaternion}
+        ref={(el) => {
+          if (el) spikes.current[index] = el;
+        }}
+        geometry={geometry}
+      >
+        <meshLambertMaterial color="royalblue" />
+      </mesh>
+    );
+  });
+};
+
+export default function Alvandi3dComponent() {
+
+    const [hovered, setHovered] = useState(false);
 
   /*
      MOUSELOCATION
@@ -26,18 +71,21 @@ export default function Alvandi3dComponent({}: Props) {
     yp += (mouseY - yp) / 10;
   }, 20);
 
+  const mesh = useRef<Mesh>(null);
+  const radius = hovered ? 2 : 1; // radius of the sphere
+
   useFrame(({ clock }) => {
-    if (mesh.current) {
-      // Check if the mesh is not null
-      mesh.current.rotation.x = yp*0.06 + clock.getElapsedTime() * 0.05;
-      mesh.current.rotation.y = xp*0.06 + clock.getElapsedTime() * 0.05;
+    if (mesh.current && !hovered) {
+      mesh.current.rotation.x = yp * 0.06 + clock.getElapsedTime() * 0.05;
+      mesh.current.rotation.y = xp * 0.06 + clock.getElapsedTime() * 0.05;
     }
   });
 
   return (
-    <mesh ref={mesh}>
-      <boxGeometry args={[1, 1, 1]} />
-      <meshBasicMaterial color="royalblue" />
+    <mesh ref={mesh} onPointerEnter={()=>{setHovered(true)}} onPointerLeave={()=>{setHovered(false)}}>
+      <sphereGeometry args={[radius, 32, 32]} />
+      <meshLambertMaterial color="royalblue" />
+      <Spikes radius={radius} />
     </mesh>
   );
 }
