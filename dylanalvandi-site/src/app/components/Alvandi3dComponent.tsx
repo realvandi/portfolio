@@ -1,3 +1,5 @@
+"use client"
+
 import { useFrame } from "@react-three/fiber";
 import React, { useRef, useMemo, useState } from "react";
 import { Mesh, CylinderGeometry, Vector3, Quaternion } from "three";
@@ -49,9 +51,9 @@ const Spikes = ({ radius }: any) => {
   });
 };
 
-export default function Alvandi3dComponent() {
-  const [hovered, setHovered] = useState(false);
+type Props = { hovered: any; setHovered: any };
 
+export default function Alvandi3dComponent({hovered, setHovered}: Props) {
   const props = useSpring({ scale: hovered ? 2 : 1 });
 
   /*
