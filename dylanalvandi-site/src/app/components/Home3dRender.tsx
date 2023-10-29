@@ -3,6 +3,7 @@
 import { Canvas } from "@react-three/fiber";
 import React, { useEffect, useRef } from "react";
 import Alvandi3dComponent from "./Alvandi3dComponent";
+import { DepthOfField, EffectComposer } from "@react-three/postprocessing";
 
 type Props = {hovered: any, setHovered: any};
 
@@ -47,10 +48,18 @@ export default function Home3dRender({hovered, setHovered}: Props) {
     }, []);
   
     return (
-      <Canvas ref={canvasRef} onContextMenu={(e) => e.preventDefault()}>
+      <Canvas ref={canvasRef} onContextMenu={(e) => e.preventDefault()} gl={{ alpha: true }}>
         <ambientLight intensity={0.1} />
         <directionalLight color="blue" position={[0, 0, 5]} />
         <Alvandi3dComponent hovered={hovered} setHovered={setHovered}/>
+        {/* Post-processing effects */}
+      <EffectComposer>
+        <DepthOfField
+          target={[5, 5, 200]} // set the focus target, adjust as needed
+          focalLength={0.01} // adjust the focal length for stronger/weaker blur
+          bokehScale={20} // adjust the bokeh scale for larger/smaller bokeh
+        />
+      </EffectComposer>
       </Canvas>
     );
   }

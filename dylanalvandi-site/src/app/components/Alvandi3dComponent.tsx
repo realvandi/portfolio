@@ -5,7 +5,7 @@ import React, { useRef, useMemo, useState, useEffect } from "react";
 import { Mesh, CylinderGeometry, Vector3, Quaternion } from "three";
 import { useSpring, a } from "@react-spring/three";
 
-const meshColor = "white"
+const meshColor = "royalblue"
 
 const Spikes = ({ radius }: any) => {
     const spikes = useRef<Mesh[]>([]);
@@ -51,7 +51,7 @@ const Spikes = ({ radius }: any) => {
           }}
           geometry={geometry}
         >
-          <meshBasicMaterial color={meshColor}/>
+          <meshBasicMaterial color={'white'}/>
         </mesh>
       );
     });
