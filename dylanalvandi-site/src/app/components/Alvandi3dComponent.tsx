@@ -114,7 +114,7 @@ const Spikes = ({ radius, timeHeldDown }: any) => {
   
     // Calculate positions only once
     const positions = useMemo(() =>
-      [...Array(15)].map(() =>
+      [...Array(30)].map(() =>
         new Vector3(
           (Math.random() - 0.5) * 6,
           (Math.random() - 0.5) * 6,
@@ -128,7 +128,7 @@ const Spikes = ({ radius, timeHeldDown }: any) => {
   
     useFrame(({ clock }) => {
       spikes.current.forEach((spike, i) => {
-        const scale = 1 + Math.sin(clock.getElapsedTime() * 5 + i) * 0.05 ;
+        const scale = 1 + Math.sin(clock.getElapsedTime() * 8 + i  + (timeHeldDown * 0.2) ) * (0.1) ;
         if (spike) {
           spike.scale.set(1, scale, 1);
         }
@@ -153,6 +153,47 @@ const Spikes = ({ radius, timeHeldDown }: any) => {
           geometry={geometry}
         >
           <meshNormalMaterial/>
+        </mesh>
+      );
+    });
+  };
+
+  const GigaSpikes = ({ radius, timeHeldDown }: any) => {
+    const spikes = useRef<Mesh[]>([]);
+    const geometry = useMemo(() => new CylinderGeometry(0.4, 0, 30, 2), []);
+  
+    // Calculate positions only once
+    const positions = useMemo(() =>
+      [...Array(2)].map(() =>
+        new Vector3(
+          (Math.random() - 0.5),
+          (Math.random() - 0.5),
+          (Math.random() - 0.5)
+        )
+          .normalize()
+          .multiplyScalar(15)
+      ),
+      [radius]
+    );
+  
+    return positions.map((position, index) => {
+      const up = new Vector3(0, 1, 0);
+      const quaternion = new Quaternion().setFromUnitVectors(
+        up,
+        position.clone().normalize()
+      );
+  
+      return (
+        <mesh
+          key={index}
+          position={position}
+          quaternion={quaternion}
+          ref={(el) => {
+            if (el) spikes.current[index] = el;
+          }}
+          geometry={geometry}
+        >
+          <meshBasicMaterial transparent opacity={0.2} color={'white'}/>
         </mesh>
       );
     });
@@ -264,11 +305,12 @@ export default function Alvandi3dComponent({ hovered, setHovered }: Props) {
       }}
       scale={props.scale.to((s) => [s, s, s])}
     >
-      <sphereGeometry args={[radius, 16, 16]} />
+      <sphereGeometry args={[radius, 8, 8]} />
       <meshNormalMaterial />
       <Spikes radius={radius} timeHeldDown={timeHeldDown}/>
       <BigSpikes radius={radius} timeHeldDown={timeHeldDown}/>
       <SurfaceSpikes radius={radius} timeHeldDown={timeHeldDown}/>
+      <GigaSpikes radius={radius} timeHeldDown={timeHeldDown}/>
     </a.mesh>
   );
 }
