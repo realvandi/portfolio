@@ -1,6 +1,7 @@
 import { useFrame } from "@react-three/fiber";
 import React, { useRef, useMemo, useState } from "react";
 import { Mesh, CylinderGeometry, Vector3, Quaternion } from "three";
+import { useSpring, a } from "@react-spring/three";
 
 const Spikes = ({ radius }: any) => {
   const spikes = useRef<Mesh[]>([]);
@@ -49,8 +50,9 @@ const Spikes = ({ radius }: any) => {
 };
 
 export default function Alvandi3dComponent() {
+  const [hovered, setHovered] = useState(false);
 
-    const [hovered, setHovered] = useState(false);
+  const props = useSpring({ scale: hovered ? 2 : 1 });
 
   /*
      MOUSELOCATION
@@ -72,20 +74,29 @@ export default function Alvandi3dComponent() {
   }, 20);
 
   const mesh = useRef<Mesh>(null);
-  const radius = hovered ? 2 : 1; // radius of the sphere
+  const radius = 1;
 
   useFrame(({ clock }) => {
-    if (mesh.current && !hovered) {
+    if (mesh.current) {
       mesh.current.rotation.x = yp * 0.06 + clock.getElapsedTime() * 0.05;
       mesh.current.rotation.y = xp * 0.06 + clock.getElapsedTime() * 0.05;
     }
   });
 
   return (
-    <mesh ref={mesh} onPointerEnter={()=>{setHovered(true)}} onPointerLeave={()=>{setHovered(false)}}>
+    <a.mesh
+      ref={mesh}
+      onPointerEnter={() => {
+        setHovered(true);
+      }}
+      onPointerLeave={() => {
+        setHovered(false);
+      }}
+      scale={props.scale.to((s) => [s, s, s])}
+    >
       <sphereGeometry args={[radius, 32, 32]} />
       <meshLambertMaterial color="royalblue" />
       <Spikes radius={radius} />
-    </mesh>
+    </a.mesh>
   );
 }
