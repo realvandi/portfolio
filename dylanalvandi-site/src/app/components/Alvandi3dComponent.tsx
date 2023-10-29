@@ -9,7 +9,7 @@ const meshColor = "white"
 
 const Spikes = ({ radius }: any) => {
     const spikes = useRef<Mesh[]>([]);
-    const geometry = useMemo(() => new CylinderGeometry(0, 0.005, Math.random() * 5, 4), []);
+    const geometry = useMemo(() => new CylinderGeometry(0, 0.005, 1, 4), []);
   
     // Calculate positions only once
     const positions = useMemo(() =>
