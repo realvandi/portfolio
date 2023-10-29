@@ -5,13 +5,15 @@ import React, { useRef, useMemo, useState, useEffect } from "react";
 import { Mesh, CylinderGeometry, Vector3, Quaternion } from "three";
 import { useSpring, a } from "@react-spring/three";
 
+const meshColor = "white"
+
 const Spikes = ({ radius }: any) => {
     const spikes = useRef<Mesh[]>([]);
-    const geometry = useMemo(() => new CylinderGeometry(0, 0.4, 0.2, 7), []);
+    const geometry = useMemo(() => new CylinderGeometry(0, 0.005, Math.random() * 5, 4), []);
   
     // Calculate positions only once
     const positions = useMemo(() =>
-      [...Array(40)].map(() =>
+      [...Array(80)].map(() =>
         new Vector3(
           (Math.random() - 0.5) * 2,
           (Math.random() - 0.5) * 2,
@@ -49,7 +51,7 @@ const Spikes = ({ radius }: any) => {
           }}
           geometry={geometry}
         >
-          <meshLambertMaterial color="royalblue" />
+          <meshBasicMaterial color={meshColor}/>
         </mesh>
       );
     });
@@ -60,7 +62,7 @@ type Props = { hovered: any; setHovered: any };
 
 export default function Alvandi3dComponent({ hovered, setHovered }: Props) {
   const [timeHeldDown, setTimeHeldDown] = useState(0);
-  const props = useSpring({ scale: hovered ? 1.4 + timeHeldDown * 0.05 : 1 });
+  const props = useSpring({ scale: hovered ? 1.4 + timeHeldDown * 0.005 : 1 });
   const loggingRef = useRef(false);
   const timeHeldDownRef = useRef<NodeJS.Timeout | null>(null);
 
@@ -112,8 +114,8 @@ export default function Alvandi3dComponent({ hovered, setHovered }: Props) {
 
       // Update rotation based on delta
       rotationRef.current = {
-        x: rotationRef.current.x + mouseData.deltaMouse.y * (hovered ? 0.2 : 0.2),
-        y: rotationRef.current.y + mouseData.deltaMouse.x * (hovered ? 0.2 : 0.2),
+        x: rotationRef.current.x + mouseData.deltaMouse.y * (hovered ? 0.02 : 0.2),
+        y: rotationRef.current.y + mouseData.deltaMouse.x * (hovered ? 0.02 : 0.2),
       };
 
       // Apply rotation to mesh
@@ -162,8 +164,8 @@ export default function Alvandi3dComponent({ hovered, setHovered }: Props) {
       }}
       scale={props.scale.to((s) => [s, s, s])}
     >
-      <sphereGeometry args={[radius, 32, 32]} />
-      <meshLambertMaterial color="royalblue" />
+      <sphereGeometry args={[radius, 16, 16]} />
+      <meshNormalMaterial />
       <Spikes radius={radius} />
     </a.mesh>
   );

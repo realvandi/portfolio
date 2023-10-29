@@ -13,7 +13,7 @@ type Props = {};
 
 export default function AlvandiNavbar({}: Props) {
   return (
-    <Navbar isBlurred onMenuOpenChange={()=>{}} className={`h-[${NAVBAR_HEIGHT}]`} position="sticky">
+    <Navbar isBlurred onMenuOpenChange={()=>{}} className={`h-[${NAVBAR_HEIGHT}] absolute`} position="sticky">
       <NavbarContent>
         <NavbarBrand>
           <p className="font-bold text-inherit">DYLAN ALVANDI</p>
