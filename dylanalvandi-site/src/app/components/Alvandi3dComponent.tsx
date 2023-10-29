@@ -28,7 +28,7 @@ const Spikes = ({ radius, timeHeldDown }: any) => {
     useFrame(({ clock }) => {
       spikes.current.forEach((spike, i) => {
         // const scale = 1 + Math.sin(clock.getElapsedTime() * 5 + i) * 0.3;
-        const scale = 1 + Math.sin(clock.getElapsedTime() * 5 + i + (timeHeldDown * 0.03) ) * 0.05 * (timeHeldDown * 0.3);
+        const scale = 1 + Math.sin(clock.getElapsedTime() * 5 + i + (timeHeldDown * 0.01) ) * 0.05 * (timeHeldDown * 0.3);
         if (spike) {
           spike.scale.set(1, scale, 1);
         }
@@ -60,11 +60,11 @@ const Spikes = ({ radius, timeHeldDown }: any) => {
   
   const BigSpikes = ({ radius, timeHeldDown }: any) => {
     const spikes = useRef<Mesh[]>([]);
-    const geometry = useMemo(() => new CylinderGeometry(0, 0.01, 3, 5), []);
+    const geometry = useMemo(() => new CylinderGeometry(0, 0.01, 2, 5), []);
   
     // Calculate positions only once
     const positions = useMemo(() =>
-      [...Array(17)].map(() =>
+      [...Array(10)].map(() =>
         new Vector3(
           (Math.random() - 0.5) * 2,
           (Math.random() - 0.5) * 2,
@@ -203,7 +203,7 @@ type Props = { hovered: any; setHovered: any };
 
 export default function Alvandi3dComponent({ hovered, setHovered }: Props) {
   const [timeHeldDown, setTimeHeldDown] = useState(0);
-  const props = useSpring({ scale: hovered ? 1.4 + timeHeldDown * 0.002 : 1 });
+  const props = useSpring({ scale: hovered ? 1.2 + timeHeldDown * 0.002 : 1 });
   const loggingRef = useRef(false);
   const timeHeldDownRef = useRef<NodeJS.Timeout | null>(null);
 
@@ -260,8 +260,8 @@ export default function Alvandi3dComponent({ hovered, setHovered }: Props) {
       };
 
       // Apply rotation to mesh
-      mesh.current.rotation.x = rotationRef.current.x + clock.getElapsedTime() * (0.1 + (timeHeldDown * 0.00003));
-      mesh.current.rotation.y = rotationRef.current.y + clock.getElapsedTime() * (0.1 + (timeHeldDown * 0.00003));
+      mesh.current.rotation.x = rotationRef.current.x + clock.getElapsedTime() * (0.15 + (timeHeldDown * 0.005));
+      mesh.current.rotation.y = rotationRef.current.y + clock.getElapsedTime() * (0.1 + (timeHeldDown * 0.003));
     }
 
     // Update previous mouse position

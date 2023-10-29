@@ -1,66 +1,116 @@
-"use client"
+"use client";
 
-import { Canvas } from "@react-three/fiber";
-import React, { useEffect, useRef } from "react";
+import { Canvas, useFrame } from "@react-three/fiber";
+import React, { useEffect, useMemo, useRef } from "react";
 import Alvandi3dComponent from "./Alvandi3dComponent";
 import { DepthOfField, EffectComposer } from "@react-three/postprocessing";
 
-type Props = {hovered: any, setHovered: any};
 
-export default function Home3dRender({hovered, setHovered}: Props) {
-    const canvasRef = useRef<any>(null);
-    const longPressTimer = useRef<any>(null);
+function WhiteParticles() {
+    // Create an array of particle objects with initial positions
+    const particles = useMemo(
+      () =>
+        Array.from({ length: 30 }, (_, index) => ({
+          position: [Math.random() * 10 - 5, Math.random() * 10 - 5, Math.random() * 10 - 10],
+        })),
+      []
+    );
   
-    const clearLongPress = () => {
-      if (longPressTimer.current) {
-        clearTimeout(longPressTimer.current);
-        longPressTimer.current = null;
-      }
-    };
+    // Ref to store particle meshes
+    const particleMeshes = useRef([]);
   
-    useEffect(() => {
-      const handleTouchStart = (event: any) => {
-        clearLongPress();
-        event.preventDefault();
-        longPressTimer.current = setTimeout(() => {
-          // Handle long press if needed
-        }, 500); // 500ms for long press, adjust as needed
-      };
+    // Update particle positions over time using useFrame
+    useFrame(() => {
+      particles.forEach((particle, index) => {
+        const mesh = particleMeshes.current[index];
+        if (mesh) {
+          // Update particle position (e.g., move along the Z-axis)
+          particle.position[2] += 0.003; // Adjust the speed as needed
   
-      const handleTouchEnd = () => {
-        clearLongPress();
-      };
+          // Reset position when particle moves out of the view
+          if (particle.position[2] > 5) {
+            particle.position[2] = -10;
+          }
   
-      const canvasElement = canvasRef.current;
-  
-      if (canvasElement) {
-        canvasElement.addEventListener('touchstart', handleTouchStart, { passive: false });
-        canvasElement.addEventListener('touchend', handleTouchEnd, { passive: false });
-      }
-  
-      return () => {
-        if (canvasElement) {
-          canvasElement.removeEventListener('touchstart', handleTouchStart);
-          canvasElement.removeEventListener('touchend', handleTouchEnd);
+          // Apply the updated position to the mesh
+          mesh.position.set(...particle.position);
         }
-        clearLongPress();
-      };
-    }, []);
+      });
+    });
   
     return (
-      <Canvas ref={canvasRef} onContextMenu={(e) => e.preventDefault()} gl={{ alpha: true }}>
-        {/* <mesh position={[0, 0, -5]}>
-        <planeGeometry args={[100, 100]} />
-        <meshBasicMaterial
-          color={0x00ff00} // Color of the plane (you can change it)
-          transparent
-          opacity={0} // Set the opacity to make it transparent
-        />
-      </mesh> */}
-        <ambientLight intensity={0.1} />
-        <directionalLight color="blue" position={[0, 0, 5]} />
-        <Alvandi3dComponent hovered={hovered} setHovered={setHovered}/>
-        {/* Post-processing effects */}
+      <>
+        {particles.map((particle, index) => (
+          <mesh key={index} ref={(mesh) => (particleMeshes.current[index] = mesh)} position={particle.position}>
+            <sphereGeometry args={[0.01, 2, 2]} />
+            <meshBasicMaterial color={0xffffff} />
+          </mesh>
+        ))}
+      </>
+    );
+  }
+
+type Props = { hovered: any; setHovered: any };
+
+export default function Home3dRender({ hovered, setHovered }: Props) {
+  const canvasRef = useRef<any>(null);
+  const longPressTimer = useRef<any>(null);
+
+  const clearLongPress = () => {
+    if (longPressTimer.current) {
+      clearTimeout(longPressTimer.current);
+      longPressTimer.current = null;
+    }
+  };
+
+  useEffect(() => {
+    const handleTouchStart = (event: any) => {
+      clearLongPress();
+      event.preventDefault();
+      longPressTimer.current = setTimeout(() => {
+        // Handle long press if needed
+      }, 500); // 500ms for long press, adjust as needed
+    };
+
+    const handleTouchEnd = () => {
+      clearLongPress();
+    };
+
+    const canvasElement = canvasRef.current;
+
+    if (canvasElement) {
+      canvasElement.addEventListener("touchstart", handleTouchStart, {
+        passive: false,
+      });
+      canvasElement.addEventListener("touchend", handleTouchEnd, {
+        passive: false,
+      });
+    }
+
+    return () => {
+      if (canvasElement) {
+        canvasElement.removeEventListener("touchstart", handleTouchStart);
+        canvasElement.removeEventListener("touchend", handleTouchEnd);
+      }
+      clearLongPress();
+    };
+  }, []);
+
+  return (
+    <Canvas
+      ref={canvasRef}
+      onContextMenu={(e) => e.preventDefault()}
+      gl={{ alpha: true }}
+    >
+      <ambientLight intensity={0.1} />
+      <directionalLight color="blue" position={[0, 0, 5]} />
+      <Alvandi3dComponent hovered={hovered} setHovered={setHovered} />
+      <mesh>
+        <sphereGeometry args={[0.98]} />
+        <meshBasicMaterial color={"pink"} />
+      </mesh>
+      <WhiteParticles />
+      {/* Post-processing effects */}
       <EffectComposer>
         <DepthOfField
           target={[5, 5, 200]} // set the focus target, adjust as needed
@@ -68,6 +118,6 @@ export default function Home3dRender({hovered, setHovered}: Props) {
           bokehScale={20} // adjust the bokeh scale for larger/smaller bokeh
         />
       </EffectComposer>
-      </Canvas>
-    );
-  }
+    </Canvas>
+  );
+}
