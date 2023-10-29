@@ -1,10 +1,19 @@
 "use client";
 
-import { Canvas, useFrame } from "@react-three/fiber";
+import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import React, { useEffect, useMemo, useRef } from "react";
 import Alvandi3dComponent from "./Alvandi3dComponent";
 import { DepthOfField, EffectComposer } from "@react-three/postprocessing";
 
+function CameraControls() {
+    const { camera } = useThree();
+  
+    // You can adjust the camera properties here
+    camera.position.set(0, 0, 5); // Set the camera's position
+    camera.lookAt(-0.1, -0.4, -0.25); // Set the point the camera is looking at
+  
+    return null;
+  }
 
 function WhiteParticles() {
     // Create an array of particle objects with initial positions
@@ -118,6 +127,7 @@ export default function Home3dRender({ hovered, setHovered }: Props) {
           bokehScale={20} // adjust the bokeh scale for larger/smaller bokeh
         />
       </EffectComposer>
+      <CameraControls />
     </Canvas>
   );
 }
