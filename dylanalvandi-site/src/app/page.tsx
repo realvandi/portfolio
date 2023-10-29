@@ -8,13 +8,13 @@ import { createContext, useContext, useEffect, useRef, useState } from "react";
 import { ScreenWidth } from "./types";
 import { useMediaQuery } from "react-responsive";
 import HomeName from "./components/HomeName";
+import { FaGithub, FaLinkedin, FaReddit, FaRegEnvelope } from "react-icons/fa";
 
 // Create a context to hold the home variables
 export const HomeContext = createContext<any>(undefined);
 
 // A component that sets the home variables
 function HomeProvider({ children }: any) {
-
   const isMobile = useMediaQuery({ minWidth: "0px", maxWidth: "639px" });
   const isSm = useMediaQuery({ minWidth: "640px", maxWidth: "767px" });
   const isMd = useMediaQuery({ minWidth: "768px", maxWidth: "1023px" });
@@ -24,7 +24,7 @@ function HomeProvider({ children }: any) {
 
   useEffect(() => {
     if (isMobile) {
-      setScreenWidth(ScreenWidth.MOBILE );
+      setScreenWidth(ScreenWidth.MOBILE);
     } else if (isSm) {
       setScreenWidth(ScreenWidth.SM);
     } else if (isMd) {
@@ -39,7 +39,6 @@ function HomeProvider({ children }: any) {
       setScreenWidth(ScreenWidth.MOBILE);
     }
   }, [isSm, isMd, isLg, isXl, isXxl, isMobile]);
-
 
   const [screenWidth, setScreenWidth] = useState(ScreenWidth.MOBILE);
 
@@ -63,7 +62,19 @@ export default function Home() {
           id="name"
           className="absolute w-full h-full flex flex-col justify-center items-center text-5xl"
         >
-          <HomeName hovered={hovered} setHovered={setHovered}/>
+          <HomeName hovered={hovered} setHovered={setHovered} />
+
+          <div className="flex flex-row z-[20] gap-6 absolute bottom-28 ">
+            <Button className="text-2xl" isIconOnly variant="light">
+              <FaGithub/>
+            </Button>
+            <Button className="text-2xl" isIconOnly variant="light">
+              <FaLinkedin/>
+            </Button>
+            <Button className="text-2xl" isIconOnly variant="light">
+              <FaRegEnvelope/>
+            </Button>
+          </div>
         </div>
         <div
           id="3d-renderer-container"
