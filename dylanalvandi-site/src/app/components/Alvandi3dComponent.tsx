@@ -7,13 +7,13 @@ import { useSpring, a } from "@react-spring/three";
 
 const meshColor = "royalblue"
 
-const Spikes = ({ radius }: any) => {
+const Spikes = ({ radius, timeHeldDown }: any) => {
     const spikes = useRef<Mesh[]>([]);
     const geometry = useMemo(() => new CylinderGeometry(0, 0.005, 1, 4), []);
   
     // Calculate positions only once
     const positions = useMemo(() =>
-      [...Array(80)].map(() =>
+      [...Array(60)].map(() =>
         new Vector3(
           (Math.random() - 0.5) * 2,
           (Math.random() - 0.5) * 2,
@@ -27,7 +27,7 @@ const Spikes = ({ radius }: any) => {
   
     useFrame(({ clock }) => {
       spikes.current.forEach((spike, i) => {
-        const scale = 1 + Math.sin(clock.getElapsedTime() * 5 + i) * 0.3;
+        const scale = 1 + Math.sin(clock.getElapsedTime() * 5 + i) * 0.3 * (timeHeldDown * 0.1);
         if (spike) {
           spike.scale.set(1, scale, 1);
         }
@@ -57,13 +57,13 @@ const Spikes = ({ radius }: any) => {
     });
   };
   
-  const BigSpikes = ({ radius }: any) => {
+  const BigSpikes = ({ radius, timeHeldDown }: any) => {
     const spikes = useRef<Mesh[]>([]);
-    const geometry = useMemo(() => new CylinderGeometry(0, 0.01, 4, 5), []);
+    const geometry = useMemo(() => new CylinderGeometry(0, 0.01, 3, 5), []);
   
     // Calculate positions only once
     const positions = useMemo(() =>
-      [...Array(20)].map(() =>
+      [...Array(17)].map(() =>
         new Vector3(
           (Math.random() - 0.5) * 2,
           (Math.random() - 0.5) * 2,
@@ -77,7 +77,7 @@ const Spikes = ({ radius }: any) => {
   
     useFrame(({ clock }) => {
       spikes.current.forEach((spike, i) => {
-        const scale = 1 + Math.sin(clock.getElapsedTime() * 5 + i) * 0.05;
+        const scale = 1 + Math.sin(clock.getElapsedTime() * 5 + i) * 0.05 * (timeHeldDown * 0.3);
         if (spike) {
           spike.scale.set(1, scale, 1);
         }
@@ -113,7 +113,7 @@ type Props = { hovered: any; setHovered: any };
 
 export default function Alvandi3dComponent({ hovered, setHovered }: Props) {
   const [timeHeldDown, setTimeHeldDown] = useState(0);
-  const props = useSpring({ scale: hovered ? 1.4 + timeHeldDown * 0.005 : 1 });
+  const props = useSpring({ scale: hovered ? 1.4 + timeHeldDown * 0.002 : 1 });
   const loggingRef = useRef(false);
   const timeHeldDownRef = useRef<NodeJS.Timeout | null>(null);
 
@@ -165,8 +165,8 @@ export default function Alvandi3dComponent({ hovered, setHovered }: Props) {
 
       // Update rotation based on delta
       rotationRef.current = {
-        x: rotationRef.current.x + mouseData.deltaMouse.y * (hovered ? 0.02 : 0.2),
-        y: rotationRef.current.y + mouseData.deltaMouse.x * (hovered ? 0.02 : 0.2),
+        x: rotationRef.current.x + mouseData.deltaMouse.y * (hovered ? 1 : 0.2),
+        y: rotationRef.current.y + mouseData.deltaMouse.x * (hovered ? 1 : 0.2),
       };
 
       // Apply rotation to mesh
@@ -217,8 +217,8 @@ export default function Alvandi3dComponent({ hovered, setHovered }: Props) {
     >
       <sphereGeometry args={[radius, 16, 16]} />
       <meshNormalMaterial />
-      <Spikes radius={radius} />
-      <BigSpikes radius={radius} />
+      <Spikes radius={radius} timeHeldDown={timeHeldDown}/>
+      <BigSpikes radius={radius} timeHeldDown={timeHeldDown}/>
     </a.mesh>
   );
 }
