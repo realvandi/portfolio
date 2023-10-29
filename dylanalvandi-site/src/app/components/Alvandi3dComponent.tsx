@@ -60,12 +60,11 @@ type Props = { hovered: any; setHovered: any };
 
 export default function Alvandi3dComponent({ hovered, setHovered }: Props) {
   const [timeHeldDown, setTimeHeldDown] = useState(0);
-  const props = useSpring({ scale: hovered ? 1.4 + timeHeldDown * 0.0005 : 1 });
+  const props = useSpring({ scale: hovered ? 1.4 + timeHeldDown * 0.05 : 1 });
   const loggingRef = useRef(false);
   const timeHeldDownRef = useRef<NodeJS.Timeout | null>(null);
 
   const startLogging = () => {
-    console.log("Pointer is held down");
     if (loggingRef.current) {
       requestAnimationFrame(startLogging);
     } else {
@@ -73,12 +72,18 @@ export default function Alvandi3dComponent({ hovered, setHovered }: Props) {
     }
   };
 
+  const clearTimeInterval = () => {
+    if (timeHeldDownRef.current) {
+      clearInterval(timeHeldDownRef.current);
+      timeHeldDownRef.current = null;
+    }
+  };
+
   useEffect(() => {
     return () => {
-      // Cleanup to stop logging when the component unmounts
-      loggingRef.current = false;
-      if (timeHeldDownRef.current) clearInterval(timeHeldDownRef.current);
-    };
+        loggingRef.current = false;
+        clearTimeInterval();
+      };
   }, []);
 
   useEffect(() => {
@@ -135,25 +140,25 @@ export default function Alvandi3dComponent({ hovered, setHovered }: Props) {
         document.body.style.cursor = "default";
         loggingRef.current = false;
         setTimeHeldDown(0); // Reset time held down
-        if (timeHeldDownRef.current) clearInterval(timeHeldDownRef.current);
+        clearTimeInterval(); // Clear the interval
       }}
       onPointerDown={() => {
         loggingRef.current = true;
         startLogging();
+        clearTimeInterval(); // Clear existing interval if any
         timeHeldDownRef.current = setInterval(() => {
           if (loggingRef.current) {
             setTimeHeldDown((prevTime) => prevTime + 1);
-          } else {
-            // Clear interval if cursor is no longer held down
-            if (timeHeldDownRef.current) clearInterval(timeHeldDownRef.current);
           }
-        }, 30); // Increment timeHeldDown every 10ms
+        }, 10);
       }}
-      
       onPointerUp={() => {
         loggingRef.current = false;
         setTimeHeldDown(0); // Reset time held down
-        if (timeHeldDownRef.current) clearInterval(timeHeldDownRef.current);
+        clearTimeInterval(); // Clear the interval
+      }}
+      onContextMenu={()=>{
+
       }}
       scale={props.scale.to((s) => [s, s, s])}
     >

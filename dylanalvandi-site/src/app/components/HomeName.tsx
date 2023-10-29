@@ -12,14 +12,14 @@ export default function HomeName({ hovered, setHovered }: Props) {
       <div
         className={`z-[10] ${
           hovered ? ( screenWidth > HOME_PAGE_NAME_DIRECTION_LIMIT ? "-translate-x-[200%]" : "-translate-y-[500%] -translate-x-1/2") : "-translate-x-1/2"
-        } transition-all`}
+        } transition-all select-none`}
       >
         DYLAN
       </div>
       <div
         className={`z-[0]  ${
           hovered ? ( screenWidth > HOME_PAGE_NAME_DIRECTION_LIMIT ? "translate-x-[150%]" : "translate-y-[450%] translate-x-1/2") : "translate-x-1/2"
-        } font-bold transition-all`}
+        } font-bold transition-all select-none`}
       >
         ALVANDI
       </div>

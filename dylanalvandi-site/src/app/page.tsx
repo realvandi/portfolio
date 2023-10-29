@@ -4,7 +4,7 @@ import { Button } from "@nextui-org/button";
 import Image from "next/image";
 import { NAVBAR_HEIGHT } from "./sizes";
 import Home3dRender from "./components/Home3dRender";
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useRef, useState } from "react";
 import { ScreenWidth } from "./types";
 import { useMediaQuery } from "react-responsive";
 import HomeName from "./components/HomeName";
@@ -67,7 +67,7 @@ export default function Home() {
         </div>
         <div
           id="3d-renderer-container"
-          className="w-full h-full absolute z-[5]"
+          className="w-full h-full absolute z-[5] select-none"
         >
           <Home3dRender hovered={hovered} setHovered={setHovered} />
         </div>
