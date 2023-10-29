@@ -57,6 +57,57 @@ const Spikes = ({ radius }: any) => {
     });
   };
   
+  const BigSpikes = ({ radius }: any) => {
+    const spikes = useRef<Mesh[]>([]);
+    const geometry = useMemo(() => new CylinderGeometry(0, 0.01, 4, 5), []);
+  
+    // Calculate positions only once
+    const positions = useMemo(() =>
+      [...Array(20)].map(() =>
+        new Vector3(
+          (Math.random() - 0.5) * 2,
+          (Math.random() - 0.5) * 2,
+          (Math.random() - 0.5) * 2
+        )
+          .normalize()
+          .multiplyScalar(radius)
+      ),
+      [radius]
+    );
+  
+    useFrame(({ clock }) => {
+      spikes.current.forEach((spike, i) => {
+        const scale = 1 + Math.sin(clock.getElapsedTime() * 5 + i) * 0.05;
+        if (spike) {
+          spike.scale.set(1, scale, 1);
+        }
+      });
+    });
+  
+    return positions.map((position, index) => {
+      const up = new Vector3(0, 1, 0);
+      const quaternion = new Quaternion().setFromUnitVectors(
+        up,
+        position.clone().normalize()
+      );
+  
+      return (
+        <mesh
+          key={index}
+          position={position}
+          quaternion={quaternion}
+          ref={(el) => {
+            if (el) spikes.current[index] = el;
+          }}
+          geometry={geometry}
+        >
+          <meshBasicMaterial color={'white'}/>
+        </mesh>
+      );
+    });
+  };
+  
+  
   
 type Props = { hovered: any; setHovered: any };
 
@@ -167,6 +218,7 @@ export default function Alvandi3dComponent({ hovered, setHovered }: Props) {
       <sphereGeometry args={[radius, 16, 16]} />
       <meshNormalMaterial />
       <Spikes radius={radius} />
+      <BigSpikes radius={radius} />
     </a.mesh>
   );
 }

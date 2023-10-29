@@ -49,6 +49,14 @@ export default function Home3dRender({hovered, setHovered}: Props) {
   
     return (
       <Canvas ref={canvasRef} onContextMenu={(e) => e.preventDefault()} gl={{ alpha: true }}>
+        {/* <mesh position={[0, 0, -5]}>
+        <planeGeometry args={[100, 100]} />
+        <meshBasicMaterial
+          color={0x00ff00} // Color of the plane (you can change it)
+          transparent
+          opacity={0} // Set the opacity to make it transparent
+        />
+      </mesh> */}
         <ambientLight intensity={0.1} />
         <directionalLight color="blue" position={[0, 0, 5]} />
         <Alvandi3dComponent hovered={hovered} setHovered={setHovered}/>
