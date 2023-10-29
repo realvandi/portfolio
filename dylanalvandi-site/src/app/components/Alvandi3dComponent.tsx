@@ -260,8 +260,8 @@ export default function Alvandi3dComponent({ hovered, setHovered }: Props) {
       };
 
       // Apply rotation to mesh
-      mesh.current.rotation.x = rotationRef.current.x + clock.getElapsedTime() * 0.1;
-      mesh.current.rotation.y = rotationRef.current.y + clock.getElapsedTime() * 0.1;
+      mesh.current.rotation.x = rotationRef.current.x + clock.getElapsedTime() * (0.1 + (timeHeldDown * 0.00003));
+      mesh.current.rotation.y = rotationRef.current.y + clock.getElapsedTime() * (0.1 + (timeHeldDown * 0.00003));
     }
 
     // Update previous mouse position
