@@ -5,9 +5,10 @@ import React, { useContext, useEffect, useMemo, useRef, useState } from "react";
 import Alvandi3dComponent from "./Alvandi3dComponent";
 import { DepthOfField, EffectComposer } from "@react-three/postprocessing";
 import { Button } from "@nextui-org/react";
-import { useSpring, config, animated, update } from 'react-spring';
-import { Vector3 } from 'three';
+import { useSpring, config, animated, update } from "react-spring";
+import { Vector3 } from "three";
 import { HomeContext } from "../page";
+import { useRouter } from "next/navigation";
 
 // function CameraControls() {
 //   const { camera } = useThree();
@@ -38,7 +39,6 @@ function CameraControls({ cameraPosition = [0, 0, 5] }: CameraControlsProps) {
 
   return null;
 }
-
 
 function WhiteParticles() {
   // Create an array of particle objects with initial positions
@@ -97,20 +97,33 @@ function WhiteParticles() {
 type Props = { hovered: any; setHovered: any };
 
 export default function Home3dRender({ hovered, setHovered }: Props) {
+
+  const router = useRouter();
+
+
   const canvasRef = useRef<any>(null);
   const longPressTimer = useRef<any>(null);
 
   const [cameraPosition, setCameraPosition] = useState([0, 0, 5]);
 
-  const {timeHeldDown} = useContext(HomeContext);
-  const {setHomePhase} = useContext(HomeContext);
+  const { timeHeldDown, setTimeHeldDown } = useContext(HomeContext);
+  const { setHomePhase, homePhase } = useContext(HomeContext);
 
-  useEffect(()=>{
-    if(timeHeldDown >= 450){
-      updateCameraPosition()
-      setHomePhase(1)
+  const navigateToPage = (pageUrl: string) => {
+    router.push(pageUrl); // Use router.push to navigate to the specified page
+  };
+
+  useEffect(() => {
+    if (timeHeldDown >= 450 && homePhase === 0) {
+      updateCameraPosition();
+      setHomePhase(1);
+      setTimeHeldDown(0);
+      const switchi = setTimeout(()=>{
+        console.log("Navigating to who..")
+        navigateToPage('/who')
+      }, 1000)
     }
-  },[timeHeldDown])
+  }, [timeHeldDown]);
 
   const updateCameraPosition = () => {
     // Update the camera position when the button is clicked
@@ -163,6 +176,7 @@ export default function Home3dRender({ hovered, setHovered }: Props) {
         ref={canvasRef}
         onContextMenu={(e) => e.preventDefault()}
         gl={{ alpha: true }}
+        className={`${homePhase === 1 ? 'opacity-0' : 'opacity-100'} transition-all`}
       >
         <ambientLight intensity={0.1} />
         <directionalLight color="blue" position={[0, 0, 5]} />
@@ -179,7 +193,7 @@ export default function Home3dRender({ hovered, setHovered }: Props) {
             bokehScale={20} // adjust the bokeh scale for larger/smaller bokeh
           />
         </EffectComposer>
-        <CameraControls cameraPosition={cameraPosition}/>
+        <CameraControls cameraPosition={cameraPosition} />
       </Canvas>
     </>
   );

@@ -17,6 +17,8 @@ import {
 } from "react-icons/fa";
 import HoldContinue from "./components/HoldContinue";
 import { AnimatePresence, motion } from "framer-motion";
+import { useRouter } from "next/navigation";
+import HomeText from "./components/HomeText";
 
 // Create a context to hold the home variables
 export const HomeContext = createContext<any>(undefined);
@@ -81,38 +83,16 @@ export default function Home() {
           id="name"
           className="absolute w-full h-full flex flex-col justify-center items-center text-5xl"
         >
-          <AnimatePresence>
-            <HomeName hovered={hovered} setHovered={setHovered} />
-            <motion.div
-              className="absolute bottom-28 z-[20] flex flex-col items-center justify-center"
-              key={"home-text"}
-              initial={{ opacity: 0, transform: "translateY(30px)" }}
-              animate={{ opacity: 1, transform: "translateY(0px)" }}
-              exit={{ opacity: 0 }}
-            >
-              <div className="flex flex-row  gap-6 w-full justify-center">
-                <Button className="text-2xl" isIconOnly variant="light">
-                  <FaGithub />
-                </Button>
-                <Button className="text-2xl" isIconOnly variant="light">
-                  <FaLinkedin />
-                </Button>
-                <Button className="text-2xl" isIconOnly variant="light">
-                  <FaRegEnvelope />
-                </Button>
-              </div>
-
-              <div className="text-lg w-full flex flex-col items-center justify-center">
-                <div>- Was the cake really a lie? -</div>
-                <span className="text-sm text-neutral-500">
-                  Hold down on the thingy in the middle
-                </span>
-                <span className="text-xs text-neutral-700">
-                  (or just use the navigation bar)
-                </span>
-              </div>
-            </motion.div>
-          </AnimatePresence>
+          <HomeName hovered={hovered} setHovered={setHovered} />
+          <motion.div
+            className="absolute bottom-28 z-[20] flex flex-col items-center justify-center"
+            key={"home-text"}
+            initial={{ opacity: 0, transform: "translateY(30px)" }}
+            animate={{ opacity: 1, transform: "translateY(0px)" }}
+            exit={{ opacity: 0 }}
+          >
+            <HomeText/>
+          </motion.div>
         </div>
         <div
           style={{ pointerEvents: "none" }}
