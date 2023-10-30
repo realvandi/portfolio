@@ -8,7 +8,7 @@ type Props = {};
 
 export default function page({}: Props) {
   return (
-    <AnimatePresence>
+    <>
       <div style={{ marginTop: NAVBAR_HEIGHT }} key="top"></div>
       <motion.div
         className="flex flex-col justify-center items-center w-screen"
@@ -19,6 +19,6 @@ export default function page({}: Props) {
       >
         Who?
       </motion.div>
-    </AnimatePresence>
+    </>
   );
 }
