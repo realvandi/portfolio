@@ -4,7 +4,8 @@ import { useFrame, useThree } from "@react-three/fiber";
 import React, { useRef, useMemo, useState, useEffect, useContext } from "react";
 import { Mesh, CylinderGeometry, Vector3, Quaternion } from "three";
 import { useSpring, a } from "@react-spring/three";
-import { HomeContext } from "../page";
+import { HomeContext } from "./HomeContext";
+
 
 const meshColor = "royalblue";
 
@@ -289,12 +290,17 @@ export default function Alvandi3dComponent({ hovered, setHovered }: Props) {
     }
   },[homePhase])
 
+  const incrementTime = () => {
+    setTimeHeldDown((prevTimeHeldDown) => prevTimeHeldDown + 1);
+  };
+
   return (
     <a.mesh
       ref={mesh}
       onPointerEnter={() => {
         setHovered(true);
         document.body.style.cursor = "pointer";
+        console.log('pointer enter')
       }}
       onPointerLeave={() => {
         setHovered(false);
@@ -302,6 +308,7 @@ export default function Alvandi3dComponent({ hovered, setHovered }: Props) {
         loggingRef.current = false;
         setTimeHeldDown(0); // Reset time held down
         clearTimeInterval(); // Clear the interval
+        console.log('pointer leave')
       }}
       onPointerDown={() => {
         loggingRef.current = true;
@@ -309,15 +316,17 @@ export default function Alvandi3dComponent({ hovered, setHovered }: Props) {
         clearTimeInterval(); // Clear existing interval if any
         timeHeldDownRef.current = setInterval(() => {
           if (loggingRef.current) {
-            setTimeHeldDown((prevTime) => prevTime + 1);
+            incrementTime();
           }
         }, 10);
+        console.log('pointer down')
       }}
-      onPointerUp={() => {
-        loggingRef.current = false;
-        setTimeHeldDown(0); // Reset time held down
-        clearTimeInterval(); // Clear the interval
-      }}
+      // onPointerUp={() => {
+      //   loggingRef.current = false;
+      //   setTimeHeldDown(0); // Reset time held down
+      //   clearTimeInterval(); // Clear the interval
+      //   console.log('pointer up')
+      // }}
       onContextMenu={() => {}}
       scale={props.scale.to((s) => [s, s, s])}
     >

@@ -7,8 +7,9 @@ import { DepthOfField, EffectComposer } from "@react-three/postprocessing";
 import { Button } from "@nextui-org/react";
 import { useSpring, config, animated, update } from "react-spring";
 import { Vector3 } from "three";
-import { HomeContext } from "../page";
+
 import { useRouter } from "next/navigation";
+import { HomeContext } from "./HomeContext";
 
 // function CameraControls() {
 //   const { camera } = useThree();
@@ -193,7 +194,7 @@ export default function Home3dRender({ hovered, setHovered }: Props) {
             bokehScale={20} // adjust the bokeh scale for larger/smaller bokeh
           />
         </EffectComposer>
-        <CameraControls cameraPosition={cameraPosition} />
+        <CameraControls cameraPosition={cameraPosition as [number, number, number]} />
       </Canvas>
     </>
   );

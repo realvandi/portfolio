@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
-import { HomeContext } from "../page";
+
 import { Progress } from "@nextui-org/react";
+import { HomeContext } from "./HomeContext";
 
 type Props = {};
 

@@ -1,7 +1,7 @@
 import { Button } from "@nextui-org/react";
 import React, { useContext } from "react";
 import { FaGithub, FaLinkedin, FaRegEnvelope } from "react-icons/fa";
-import { HomeContext } from "../page";
+import { HomeContext } from "./HomeContext";
 
 type Props = {};
 

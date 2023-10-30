@@ -1,8 +1,9 @@
 import React, { useContext } from "react";
-import { HomeContext } from "../page";
+
 import { HOME_PAGE_NAME_DIRECTION_LIMIT } from "../types";
 import { Button } from "@nextui-org/react";
 import { FaGithub } from "react-icons/fa";
+import { HomeContext } from "./HomeContext";
 
 type Props = { hovered: any; setHovered: any };
 
