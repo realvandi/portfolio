@@ -12,7 +12,7 @@ export default function HoldContinue({}: Props) {
       {timeHeldDown > 0 ? (
         <div className="w-[10rem] justify-center items-center flex flex-col">
             HOLD
-          <Progress aria-label="Loading..." value={(timeHeldDown / 400) * 100} size="sm" radius="none" color="default"/>
+          <Progress aria-label="Loading..." value={(timeHeldDown / 400) * 100} size="sm" radius="sm" color="primary"/>
         </div>
       ) : (
         <div>

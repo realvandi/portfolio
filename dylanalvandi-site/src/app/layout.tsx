@@ -6,6 +6,7 @@ import { NextUIProvider } from "@nextui-org/react";
 import { Navbar } from "@nextui-org/navbar";
 import { Providers } from "./providers";
 import AlvandiNavbar from "./AlvandiNavbar";
+import { AnimatePresence } from "framer-motion";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -23,8 +24,8 @@ export default function RootLayout({
     <html lang="en" className="dark">
       <body className={inter.className}>
         <Providers>
-          <AlvandiNavbar/>
-          {children}
+          <AlvandiNavbar />
+            {children}
         </Providers>
       </body>
     </html>

@@ -182,9 +182,6 @@ export default function Home3dRender({ hovered, setHovered }: Props) {
         </EffectComposer>
         <CameraControls cameraPosition={cameraPosition}/>
       </Canvas>
-      <Button onClick={updateCameraPosition} className="z-[100]">
-        Move Camera
-      </Button>
     </>
   );
 }
