@@ -7,6 +7,8 @@ import { Navbar } from "@nextui-org/navbar";
 import { Providers } from "./providers";
 import AlvandiNavbar from "./AlvandiNavbar";
 import { AnimatePresence } from "framer-motion";
+import { Suspense } from "react";
+import Loading from "./Loading";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -25,7 +27,9 @@ export default function RootLayout({
       <body className={inter.className}>
         <Providers>
           <AlvandiNavbar />
+          <Suspense fallback={<Loading/>}>
             {children}
+          </Suspense>
         </Providers>
       </body>
     </html>

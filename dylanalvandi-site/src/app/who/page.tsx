@@ -1,8 +1,9 @@
 "use client";
 
-import React from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import { NAVBAR_HEIGHT } from "../sizes";
 import { AnimatePresence, motion } from "framer-motion";
+import { useRouter } from "next/navigation";
 
 type Props = {};
 
