@@ -120,7 +120,7 @@ export default function Home3dRender({ hovered, setHovered }: Props) {
       setTimeHeldDown(0);
       const switchi = setTimeout(()=>{
         console.log("Navigating to who..")
-        navigateToPage('/who')
+        navigateToPage('/who#who')
       }, 1000)
     }
   }, [timeHeldDown]);

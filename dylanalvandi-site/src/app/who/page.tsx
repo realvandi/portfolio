@@ -1,8 +1,23 @@
+"use client";
+
 import React from "react";
 import { NAVBAR_HEIGHT } from "../sizes";
+import { AnimatePresence, motion } from "framer-motion";
 
 type Props = {};
 
 export default function page({}: Props) {
-  return <div className="flex flex-col justify-center" style={{marginTop: NAVBAR_HEIGHT}}>Who?</div>;
+  return (
+    <AnimatePresence>
+      <div style={{ marginTop: NAVBAR_HEIGHT }}></div>
+      <motion.div
+        className="flex flex-col justify-center items-center w-screen"
+        initial={{ opacity: 0, transform: "translateY(30px)" }}
+        animate={{ opacity: 1, transform: "translateY(0px)" }}
+        exit={{ opacity: 0 }}
+      >
+        Who?
+      </motion.div>
+    </AnimatePresence>
+  );
 }

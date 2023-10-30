@@ -6,21 +6,30 @@ import { HomeContext } from "../page";
 type Props = {};
 
 export default function HomeText({}: Props) {
-
-    const {homePhase} = useContext(HomeContext)
+  const { homePhase } = useContext(HomeContext);
 
   return (
-    <div className={`${homePhase === 1 ? 'opacity-0' : 'opacity-100'} transition-all`}>
+    <div
+      className={`${
+        homePhase === 1 ? "opacity-0" : "opacity-100"
+      } transition-all`}
+    >
       <div className="flex flex-row  gap-6 w-full justify-center">
-        <Button className="text-2xl" isIconOnly variant="light">
-          <FaGithub />
-        </Button>
-        <Button className="text-2xl" isIconOnly variant="light">
-          <FaLinkedin />
-        </Button>
-        <Button className="text-2xl" isIconOnly variant="light">
-          <FaRegEnvelope />
-        </Button>
+        <a href="https://github.com">
+          <Button className="text-2xl" isIconOnly variant="light">
+            <FaGithub />
+          </Button>
+        </a>
+        <a href="https://linkedin.com">
+          <Button className="text-2xl" isIconOnly variant="light">
+            <FaLinkedin />
+          </Button>
+        </a>
+        <a href="https://gmail.com">
+          <Button className="text-2xl" isIconOnly variant="light">
+            <FaRegEnvelope />
+          </Button>
+        </a>
       </div>
 
       <div className="text-lg w-full flex flex-col items-center justify-center">
