@@ -15,6 +15,7 @@ import {
   FaReddit,
   FaRegEnvelope,
 } from "react-icons/fa";
+import HoldContinue from "./components/HoldContinue";
 
 // Create a context to hold the home variables
 export const HomeContext = createContext<any>(undefined);
@@ -47,9 +48,11 @@ function HomeProvider({ children }: any) {
   }, [isSm, isMd, isLg, isXl, isXxl, isMobile]);
 
   const [screenWidth, setScreenWidth] = useState(ScreenWidth.MOBILE);
+  const [timeHeldDown, setTimeHeldDown] = useState(0);
+  const [homePhase, setHomePhase] = useState(0);
 
   return (
-    <HomeContext.Provider value={{ screenWidth, setScreenWidth }}>
+    <HomeContext.Provider value={{ screenWidth, setScreenWidth, timeHeldDown, setTimeHeldDown, homePhase, setHomePhase }}>
       {children}
     </HomeContext.Provider>
   );
@@ -83,8 +86,9 @@ export default function Home() {
             </div>
 
             <div className="text-lg w-full flex flex-col items-center justify-center">
-              <div>Was the cake really a lie?</div>
+              <div>- Was the cake really a lie? -</div>
               <span className="text-sm text-neutral-500">Hold down on the thingy in the middle</span>
+              <span className="text-xs text-neutral-700">(or just use the navigation bar)</span>
             </div>
           </div>
         </div>
@@ -94,11 +98,7 @@ export default function Home() {
             hovered ? "opacity-100" : "opacity-0"
           } -translate-x-1/2`}
         >
-          {
-          <div>
-          HOLD TO CONTINUE
-          </div>
-          }
+          <HoldContinue/>
         </div>
         <div
           id="3d-renderer-container"

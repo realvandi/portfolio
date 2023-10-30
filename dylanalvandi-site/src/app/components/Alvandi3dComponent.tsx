@@ -1,18 +1,20 @@
 "use client";
 
 import { useFrame, useThree } from "@react-three/fiber";
-import React, { useRef, useMemo, useState, useEffect } from "react";
+import React, { useRef, useMemo, useState, useEffect, useContext } from "react";
 import { Mesh, CylinderGeometry, Vector3, Quaternion } from "three";
 import { useSpring, a } from "@react-spring/three";
+import { HomeContext } from "../page";
 
-const meshColor = "royalblue"
+const meshColor = "royalblue";
 
 const Spikes = ({ radius, timeHeldDown }: any) => {
-    const spikes = useRef<Mesh[]>([]);
-    const geometry = useMemo(() => new CylinderGeometry(0, 0.005, 1, 4), []);
-  
-    // Calculate positions only once
-    const positions = useMemo(() =>
+  const spikes = useRef<Mesh[]>([]);
+  const geometry = useMemo(() => new CylinderGeometry(0, 0.005, 1, 4), []);
+
+  // Calculate positions only once
+  const positions = useMemo(
+    () =>
       [...Array(60)].map(() =>
         new Vector3(
           (Math.random() - 0.5) * 2,
@@ -22,48 +24,53 @@ const Spikes = ({ radius, timeHeldDown }: any) => {
           .normalize()
           .multiplyScalar(radius)
       ),
-      [radius]
+    [radius]
+  );
+
+  useFrame(({ clock }) => {
+    spikes.current.forEach((spike, i) => {
+      // const scale = 1 + Math.sin(clock.getElapsedTime() * 5 + i) * 0.3;
+      const scale =
+        1 +
+        Math.sin(clock.getElapsedTime() * 5 + i + timeHeldDown * 0.01) *
+          0.05 *
+          (timeHeldDown * 0.3);
+      if (spike) {
+        spike.scale.set(1, scale, 1);
+      }
+    });
+  });
+
+  return positions.map((position, index) => {
+    const up = new Vector3(0, 1, 0);
+    const quaternion = new Quaternion().setFromUnitVectors(
+      up,
+      position.clone().normalize()
     );
-  
-    useFrame(({ clock }) => {
-      spikes.current.forEach((spike, i) => {
-        // const scale = 1 + Math.sin(clock.getElapsedTime() * 5 + i) * 0.3;
-        const scale = 1 + Math.sin(clock.getElapsedTime() * 5 + i + (timeHeldDown * 0.01) ) * 0.05 * (timeHeldDown * 0.3);
-        if (spike) {
-          spike.scale.set(1, scale, 1);
-        }
-      });
-    });
-  
-    return positions.map((position, index) => {
-      const up = new Vector3(0, 1, 0);
-      const quaternion = new Quaternion().setFromUnitVectors(
-        up,
-        position.clone().normalize()
-      );
-  
-      return (
-        <mesh
-          key={index}
-          position={position}
-          quaternion={quaternion}
-          ref={(el) => {
-            if (el) spikes.current[index] = el;
-          }}
-          geometry={geometry}
-        >
-          <meshBasicMaterial color={'white'}/>
-        </mesh>
-      );
-    });
-  };
-  
-  const BigSpikes = ({ radius, timeHeldDown }: any) => {
-    const spikes = useRef<Mesh[]>([]);
-    const geometry = useMemo(() => new CylinderGeometry(0, 0.01, 2, 5), []);
-  
-    // Calculate positions only once
-    const positions = useMemo(() =>
+
+    return (
+      <mesh
+        key={index}
+        position={position}
+        quaternion={quaternion}
+        ref={(el) => {
+          if (el) spikes.current[index] = el;
+        }}
+        geometry={geometry}
+      >
+        <meshBasicMaterial color={"white"} />
+      </mesh>
+    );
+  });
+};
+
+const BigSpikes = ({ radius, timeHeldDown }: any) => {
+  const spikes = useRef<Mesh[]>([]);
+  const geometry = useMemo(() => new CylinderGeometry(0, 0.01, 2, 5), []);
+
+  // Calculate positions only once
+  const positions = useMemo(
+    () =>
       [...Array(10)].map(() =>
         new Vector3(
           (Math.random() - 0.5) * 2,
@@ -73,47 +80,50 @@ const Spikes = ({ radius, timeHeldDown }: any) => {
           .normalize()
           .multiplyScalar(radius)
       ),
-      [radius]
+    [radius]
+  );
+
+  useFrame(({ clock }) => {
+    spikes.current.forEach((spike, i) => {
+      const scale =
+        1 +
+        Math.sin(clock.getElapsedTime() * 5 + i + timeHeldDown * 0.03) * 0.05;
+      if (spike) {
+        spike.scale.set(1, scale, 1);
+      }
+    });
+  });
+
+  return positions.map((position, index) => {
+    const up = new Vector3(0, 1, 0);
+    const quaternion = new Quaternion().setFromUnitVectors(
+      up,
+      position.clone().normalize()
     );
-  
-    useFrame(({ clock }) => {
-      spikes.current.forEach((spike, i) => {
-        const scale = 1 + Math.sin(clock.getElapsedTime() * 5 + i + (timeHeldDown * 0.03) ) * 0.05;
-        if (spike) {
-          spike.scale.set(1, scale, 1);
-        }
-      });
-    });
-  
-    return positions.map((position, index) => {
-      const up = new Vector3(0, 1, 0);
-      const quaternion = new Quaternion().setFromUnitVectors(
-        up,
-        position.clone().normalize()
-      );
-  
-      return (
-        <mesh
-          key={index}
-          position={position}
-          quaternion={quaternion}
-          ref={(el) => {
-            if (el) spikes.current[index] = el;
-          }}
-          geometry={geometry}
-        >
-          <meshBasicMaterial color={'white'}/>
-        </mesh>
-      );
-    });
-  };
-  
-  const SurfaceSpikes = ({ radius, timeHeldDown }: any) => {
-    const spikes = useRef<Mesh[]>([]);
-    const geometry = useMemo(() => new CylinderGeometry(0, 0.5, 0.3, 5), []);
-  
-    // Calculate positions only once
-    const positions = useMemo(() =>
+
+    return (
+      <mesh
+        key={index}
+        position={position}
+        quaternion={quaternion}
+        ref={(el) => {
+          if (el) spikes.current[index] = el;
+        }}
+        geometry={geometry}
+      >
+        <meshBasicMaterial color={"white"} />
+      </mesh>
+    );
+  });
+};
+
+const SurfaceSpikes = ({ radius, timeHeldDown }: any) => {
+  const spikes = useRef<Mesh[]>([]);
+  const geometry = useMemo(() => new CylinderGeometry(0, 0.5, 0.3, 5), []);
+
+  // Calculate positions only once
+  const positions = useMemo(
+    () =>
       [...Array(30)].map(() =>
         new Vector3(
           (Math.random() - 0.5) * 6,
@@ -123,86 +133,88 @@ const Spikes = ({ radius, timeHeldDown }: any) => {
           .normalize()
           .multiplyScalar(radius)
       ),
-      [radius]
-    );
-  
-    useFrame(({ clock }) => {
-      spikes.current.forEach((spike, i) => {
-        const scale = 1 + Math.sin(clock.getElapsedTime() * 8 + i  + (timeHeldDown * 0.2) ) * (0.1) ;
-        if (spike) {
-          spike.scale.set(1, scale, 1);
-        }
-      });
-    });
-  
-    return positions.map((position, index) => {
-      const up = new Vector3(0, 1, 0);
-      const quaternion = new Quaternion().setFromUnitVectors(
-        up,
-        position.clone().normalize()
-      );
-  
-      return (
-        <mesh
-          key={index}
-          position={position}
-          quaternion={quaternion}
-          ref={(el) => {
-            if (el) spikes.current[index] = el;
-          }}
-          geometry={geometry}
-        >
-          <meshNormalMaterial/>
-        </mesh>
-      );
-    });
-  };
+    [radius]
+  );
 
-  const GigaSpikes = ({ radius, timeHeldDown }: any) => {
-    const spikes = useRef<Mesh[]>([]);
-    const geometry = useMemo(() => new CylinderGeometry(0.4, 0, 30, 2), []);
-  
-    // Calculate positions only once
-    const positions = useMemo(() =>
+  useFrame(({ clock }) => {
+    spikes.current.forEach((spike, i) => {
+      const scale =
+        1 + Math.sin(clock.getElapsedTime() * 8 + i + timeHeldDown * 0.2) * 0.1;
+      if (spike) {
+        spike.scale.set(1, scale, 1);
+      }
+    });
+  });
+
+  return positions.map((position, index) => {
+    const up = new Vector3(0, 1, 0);
+    const quaternion = new Quaternion().setFromUnitVectors(
+      up,
+      position.clone().normalize()
+    );
+
+    return (
+      <mesh
+        key={index}
+        position={position}
+        quaternion={quaternion}
+        ref={(el) => {
+          if (el) spikes.current[index] = el;
+        }}
+        geometry={geometry}
+      >
+        <meshNormalMaterial />
+      </mesh>
+    );
+  });
+};
+
+const GigaSpikes = ({ radius, timeHeldDown }: any) => {
+  const spikes = useRef<Mesh[]>([]);
+  const geometry = useMemo(() => new CylinderGeometry(0, 0.2, 8, 2), []);
+
+  // Calculate positions only once
+  const positions = useMemo(
+    () =>
       [...Array(2)].map(() =>
         new Vector3(
-          (Math.random() - 0.5),
-          (Math.random() - 0.5),
-          (Math.random() - 0.5)
+          Math.random() - 0.5,
+          Math.random() - 0.5,
+          Math.random() - 0.5
         )
           .normalize()
-          .multiplyScalar(15)
+          .multiplyScalar(-5)
       ),
-      [radius]
+    [radius]
+  );
+
+  return positions.map((position, index) => {
+    const up = new Vector3(0, 1, 0);
+    const quaternion = new Quaternion().setFromUnitVectors(
+      up,
+      position.clone().normalize()
     );
-  
-    return positions.map((position, index) => {
-      const up = new Vector3(0, 1, 0);
-      const quaternion = new Quaternion().setFromUnitVectors(
-        up,
-        position.clone().normalize()
-      );
-  
-      return (
-        <mesh
-          key={index}
-          position={position}
-          quaternion={quaternion}
-          ref={(el) => {
-            if (el) spikes.current[index] = el;
-          }}
-          geometry={geometry}
-        >
-          <meshBasicMaterial transparent opacity={0.2} color={'white'}/>
-        </mesh>
-      );
-    });
-  };
-  
+
+    return (
+      <mesh
+        key={index}
+        position={position}
+        quaternion={quaternion}
+        ref={(el) => {
+          if (el) spikes.current[index] = el;
+        }}
+        geometry={geometry}
+      >
+        <meshBasicMaterial transparent opacity={0.05} color={"white"} />
+      </mesh>
+    );
+  });
+};
+
 type Props = { hovered: any; setHovered: any };
 
 export default function Alvandi3dComponent({ hovered, setHovered }: Props) {
-  const [timeHeldDown, setTimeHeldDown] = useState(0);
+  const { timeHeldDown, setTimeHeldDown, homePhase } = useContext(HomeContext)!;
   const props = useSpring({ scale: hovered ? 1.2 + timeHeldDown * 0.002 : 1 });
   const loggingRef = useRef(false);
   const timeHeldDownRef = useRef<NodeJS.Timeout | null>(null);
@@ -224,14 +236,11 @@ export default function Alvandi3dComponent({ hovered, setHovered }: Props) {
 
   useEffect(() => {
     return () => {
-        loggingRef.current = false;
-        clearTimeInterval();
-      };
+      loggingRef.current = false;
+      clearTimeInterval();
+    };
   }, []);
 
-  useEffect(() => {
-    console.log(timeHeldDown);
-  }, [timeHeldDown]);
 
   const { mouse } = useThree();
 
@@ -239,7 +248,7 @@ export default function Alvandi3dComponent({ hovered, setHovered }: Props) {
   const radius = 1;
 
   const rotationRef = useRef({ x: 0, y: 0 });
-  
+
   const mouseData = useMemo(() => {
     return {
       prevMouse: { x: 0, y: 0 },
@@ -260,8 +269,12 @@ export default function Alvandi3dComponent({ hovered, setHovered }: Props) {
       };
 
       // Apply rotation to mesh
-      mesh.current.rotation.x = rotationRef.current.x + clock.getElapsedTime() * (0.15 + (timeHeldDown * 0.005));
-      mesh.current.rotation.y = rotationRef.current.y + clock.getElapsedTime() * (0.1 + (timeHeldDown * 0.003));
+      mesh.current.rotation.x =
+        rotationRef.current.x +
+        clock.getElapsedTime() * (0.15);
+      mesh.current.rotation.y =
+        rotationRef.current.y +
+        clock.getElapsedTime() * (0.1);
     }
 
     // Update previous mouse position
@@ -269,7 +282,12 @@ export default function Alvandi3dComponent({ hovered, setHovered }: Props) {
     mouseData.prevMouse.y = mouse.y;
   });
 
-
+  useEffect(()=>{
+    if(homePhase > 0) {
+      loggingRef.current = false;
+      setHovered(false);
+    }
+  },[homePhase])
 
   return (
     <a.mesh
@@ -300,17 +318,15 @@ export default function Alvandi3dComponent({ hovered, setHovered }: Props) {
         setTimeHeldDown(0); // Reset time held down
         clearTimeInterval(); // Clear the interval
       }}
-      onContextMenu={()=>{
-
-      }}
+      onContextMenu={() => {}}
       scale={props.scale.to((s) => [s, s, s])}
     >
       <sphereGeometry args={[radius, 8, 8]} />
       <meshNormalMaterial />
-      <Spikes radius={radius} timeHeldDown={timeHeldDown}/>
-      <BigSpikes radius={radius} timeHeldDown={timeHeldDown}/>
-      <SurfaceSpikes radius={radius} timeHeldDown={timeHeldDown}/>
-      <GigaSpikes radius={radius} timeHeldDown={timeHeldDown}/>
+      <Spikes radius={radius} timeHeldDown={timeHeldDown} />
+      <BigSpikes radius={radius} timeHeldDown={timeHeldDown} />
+      <SurfaceSpikes radius={radius} timeHeldDown={timeHeldDown} />
+      <GigaSpikes radius={radius} timeHeldDown={timeHeldDown} />
     </a.mesh>
   );
 }
