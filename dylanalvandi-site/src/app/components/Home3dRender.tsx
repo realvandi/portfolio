@@ -28,6 +28,7 @@ interface CameraControlsProps {
 function CameraControls({ cameraPosition = [0, 0, 5] }: CameraControlsProps) {
   const { camera } = useThree();
   const positionRef = useRef(new Vector3(...cameraPosition));
+  const { timeHeldDown } = useContext(HomeContext); // Destructure timeHeldDown from HomeContext
 
   useEffect(() => {
     positionRef.current.set(...cameraPosition);
@@ -35,7 +36,16 @@ function CameraControls({ cameraPosition = [0, 0, 5] }: CameraControlsProps) {
 
   useFrame(() => {
     camera.lookAt(-0.1, -0.4, -0.25);
-    camera.position.lerp(positionRef.current, 0.03); // Smooth transition to the target position
+
+    // Calculate the shake intensity based on timeHeldDown
+    const shakeIntensity = timeHeldDown / 50; // The longer the time held down, the bigger the shake. Cap at 0.5 for control
+    const shakeX = (Math.random() - 0.5) * shakeIntensity;
+    const shakeY = (Math.random() - 0.5) * shakeIntensity;
+    const shakeZ = (Math.random() - 0.5) * shakeIntensity;
+
+    // Apply shake effect to camera position
+    const newPosition = positionRef.current.clone().add(new Vector3(shakeX, shakeY, shakeZ));
+    camera.position.lerp(newPosition, 0.03); // Smooth transition to the target position
   });
 
   return null;

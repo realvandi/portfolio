@@ -9,12 +9,13 @@ type Props = {};
 export default function page({}: Props) {
   return (
     <AnimatePresence>
-      <div style={{ marginTop: NAVBAR_HEIGHT }}></div>
+      <div style={{ marginTop: NAVBAR_HEIGHT }} key="top"></div>
       <motion.div
         className="flex flex-col justify-center items-center w-screen"
         initial={{ opacity: 0, transform: "translateY(30px)" }}
         animate={{ opacity: 1, transform: "translateY(0px)" }}
         exit={{ opacity: 0 }}
+        key="who"
       >
         Who?
       </motion.div>
