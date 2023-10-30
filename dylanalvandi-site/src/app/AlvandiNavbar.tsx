@@ -34,13 +34,6 @@ export default function AlvandiNavbar({}: Props) {
           </Link>
         </NavbarBrand>
       </NavbarContent>
-      <NavbarContent justify="center" className="">
-        <NavbarItem className="text-neutral-400 hover:text-white transition-all">
-          <Link href={""}>
-            <FaArrowRight />
-          </Link>
-        </NavbarItem>
-      </NavbarContent>
       <NavbarContent justify="end" className="hidden sm:flex">
         <NavbarItem className="text-neutral-400 hover:text-white transition-all">
           <Link href={"/who"}>WHO__?</Link>

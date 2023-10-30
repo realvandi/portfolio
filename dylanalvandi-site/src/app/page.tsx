@@ -16,6 +16,7 @@ import {
   FaRegEnvelope,
 } from "react-icons/fa";
 import HoldContinue from "./components/HoldContinue";
+import { AnimatePresence, motion } from "framer-motion";
 
 // Create a context to hold the home variables
 export const HomeContext = createContext<any>(undefined);
@@ -52,7 +53,16 @@ function HomeProvider({ children }: any) {
   const [homePhase, setHomePhase] = useState(0);
 
   return (
-    <HomeContext.Provider value={{ screenWidth, setScreenWidth, timeHeldDown, setTimeHeldDown, homePhase, setHomePhase }}>
+    <HomeContext.Provider
+      value={{
+        screenWidth,
+        setScreenWidth,
+        timeHeldDown,
+        setTimeHeldDown,
+        homePhase,
+        setHomePhase,
+      }}
+    >
       {children}
     </HomeContext.Provider>
   );
@@ -71,26 +81,38 @@ export default function Home() {
           id="name"
           className="absolute w-full h-full flex flex-col justify-center items-center text-5xl"
         >
-          <HomeName hovered={hovered} setHovered={setHovered} />
-          <div className="absolute bottom-28 z-[20] flex flex-col items-center justify-center">
-            <div className="flex flex-row  gap-6 w-full justify-center">
-              <Button className="text-2xl" isIconOnly variant="light">
-                <FaGithub />
-              </Button>
-              <Button className="text-2xl" isIconOnly variant="light">
-                <FaLinkedin />
-              </Button>
-              <Button className="text-2xl" isIconOnly variant="light">
-                <FaRegEnvelope />
-              </Button>
-            </div>
+          <AnimatePresence>
+            <HomeName hovered={hovered} setHovered={setHovered} />
+            <motion.div
+              className="absolute bottom-28 z-[20] flex flex-col items-center justify-center"
+              key={"home-text"}
+              initial={{ opacity: 0, transform: "translateY(30px)" }}
+              animate={{ opacity: 1, transform: "translateY(0px)" }}
+              exit={{ opacity: 0 }}
+            >
+              <div className="flex flex-row  gap-6 w-full justify-center">
+                <Button className="text-2xl" isIconOnly variant="light">
+                  <FaGithub />
+                </Button>
+                <Button className="text-2xl" isIconOnly variant="light">
+                  <FaLinkedin />
+                </Button>
+                <Button className="text-2xl" isIconOnly variant="light">
+                  <FaRegEnvelope />
+                </Button>
+              </div>
 
-            <div className="text-lg w-full flex flex-col items-center justify-center">
-              <div>- Was the cake really a lie? -</div>
-              <span className="text-sm text-neutral-500">Hold down on the thingy in the middle</span>
-              <span className="text-xs text-neutral-700">(or just use the navigation bar)</span>
-            </div>
-          </div>
+              <div className="text-lg w-full flex flex-col items-center justify-center">
+                <div>- Was the cake really a lie? -</div>
+                <span className="text-sm text-neutral-500">
+                  Hold down on the thingy in the middle
+                </span>
+                <span className="text-xs text-neutral-700">
+                  (or just use the navigation bar)
+                </span>
+              </div>
+            </motion.div>
+          </AnimatePresence>
         </div>
         <div
           style={{ pointerEvents: "none" }}
@@ -98,7 +120,7 @@ export default function Home() {
             hovered ? "opacity-100" : "opacity-0"
           } -translate-x-1/2`}
         >
-          <HoldContinue/>
+          <HoldContinue />
         </div>
         <div
           id="3d-renderer-container"

@@ -171,7 +171,6 @@ export default function Home3dRender({ hovered, setHovered }: Props) {
           <sphereGeometry args={[0.98]} />
           <meshBasicMaterial color={"pink"} />
         </mesh>
-        <WhiteParticles />
         {/* Post-processing effects */}
         <EffectComposer>
           <DepthOfField
