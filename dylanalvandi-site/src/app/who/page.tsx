@@ -14,6 +14,8 @@ import {
   Divider,
   Link,
 } from "@nextui-org/react";
+import { Fa500Px } from "react-icons/fa";
+import AlvandiProjectIcon from "../components/AlvandiProjectIcon";
 
 const hobbies = [
   "Volleyball",
@@ -53,12 +55,38 @@ function scrollToSectionBySegment() {
   }, [pathName]);
 }
 
+export enum ProjectType {
+  GAME, OTHERS, WEBDEV, PROGRAMMING, MEDIA
+}
+
+type Project = {
+  name: string;
+  description: string;
+  link?: string;
+  type?: ProjectType;
+};
+
+const projects: Project[] = [
+  { name: "DevDocu.com", description: "A new-form documentation site", link: "https://devdocu.com", type: ProjectType.WEBDEV },
+  { name: "Quack Rush", description: "3D mobile game developed using Unreal Engine 4", type: ProjectType.GAME },
+  { name: "3D Platformer System", description: "3D platformer movement system developed using Unity",  type: ProjectType.GAME },
+  { name: "Catboxed", description: "3D mobile game developed using Unity",  type: ProjectType.GAME },
+  { name: "iPraktikum", description: "TUM project",  type: ProjectType.WEBDEV },
+  { name: "JST", description: "TUM project",  type: ProjectType.WEBDEV },
+  { name: "Realvandi", description: "TikTok content", link: "https://tiktok.com/@realvandi", type: ProjectType.MEDIA },
+  { name: "Supervillain", description: "Clothing line", type: ProjectType.OTHERS },
+  { name: "C Huffman Tree", description: "Huffman code generator using C", type: ProjectType.PROGRAMMING },
+  { name: "ASM", description: "TUM project", type: ProjectType.PROGRAMMING },
+  { name: "dylanalvandi.com", description: "Personal portfolio site for Dylan Alvandi (myself)", link:'https://dylanalvandi.com', type: ProjectType.WEBDEV },
+  { name: "Measure Tool", description: "Personal portfolio site for Dylan Alvandi (myself)", type: ProjectType.WEBDEV },
+];
+
 type Props = {};
 
 export default function page({}: Props) {
-  const handleDivClick = (targetLink : any) => {
+  const handleDivClick = (targetLink: any) => {
     console.log(targetLink);
-    const newTab = window.open(targetLink, '_blank');
+    const newTab = window.open(targetLink, "_blank");
   };
 
   return (
@@ -175,7 +203,7 @@ export default function page({}: Props) {
               })}
             </div>
             <Divider className="my-2 py-1" />
-            <div className="text-3xl font-bold">About Me</div>
+            <div className="text-3xl font-bold">WHO__?</div>
             <div className="text-medium">
               Made in <b>Jakarta</b> 🇮🇩. Currently<sup>(2023)</sup>{" "}
               <b>based in Munich</b>. I love{" "}
@@ -206,22 +234,32 @@ export default function page({}: Props) {
           exit={{ opacity: 0 }}
           key="who"
         >
-          <motion.div className="text-5xl font-bold mb-6">PROJECTS</motion.div>
+          <motion.div className="text-5xl font-bold mb-6">PR__OJECTS</motion.div>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 w-full">
-            {Array.from({ length: 21 }, (_, index) => index).map((i) => {
+            {projects.map((project) => {
               return (
                 <Card
                   isFooterBlurred
                   className=" scale-100 hover:scale-105 transition-all cursor-pointer flex items-center justify-center"
                   isPressable
                   onClick={(e: any) => {
-                    handleDivClick('https://www.google.com');
+                    if (project.link) {
+                      handleDivClick(project.link);
+                    } else {
+                      handleDivClick(
+                        "https://www.linkedin.com/in/dylanalvandi/"
+                      );
+                    }
                   }}
                 >
-                  <CardHeader className="font-bold text-xl">
-                    Foo Project Name
+                  <CardHeader className="font-bold text-xl flex flex-row gap-3">
+                    <div className="text-4xl">
+                      <AlvandiProjectIcon type={project.type}/>
+                    </div>
+                    <div>{project.name}</div>
                   </CardHeader>
-                  <CardBody>Bar project description</CardBody>
+                  <Divider></Divider>
+                  <CardBody>{project.description}</CardBody>
                 </Card>
               );
             })}
