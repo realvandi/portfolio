@@ -10,3 +10,16 @@ export enum ScreenWidth {
  * responsiveness.
  * **/
 export const HOME_PAGE_NAME_DIRECTION_LIMIT = 2;
+
+export enum ProjectType {
+    GAME, OTHERS, WEBDEV, PROGRAMMING, MEDIA
+  }
+
+
+export type Project = {
+    name: string;
+    description: string;
+    link?: string;
+    type?: ProjectType;
+  };
+  

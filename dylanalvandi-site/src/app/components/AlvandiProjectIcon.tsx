@@ -8,7 +8,7 @@ import {
   FaProjectDiagram,
   FaVideo,
 } from "react-icons/fa";
-import { ProjectType } from "../who/page";
+import { ProjectType } from "../types";
 
 type Props = { type: any };
 

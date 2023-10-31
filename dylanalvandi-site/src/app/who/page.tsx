@@ -16,6 +16,7 @@ import {
 } from "@nextui-org/react";
 import { Fa500Px } from "react-icons/fa";
 import AlvandiProjectIcon from "../components/AlvandiProjectIcon";
+import { Project, ProjectType } from "../types";
 
 const hobbies = [
   "Volleyball",
@@ -37,34 +38,6 @@ const hobbies = [
   "Trying out new stuff",
   "Writing documentation(yes, really)",
 ];
-
-function scrollToSectionBySegment() {
-  const pathName = usePathname();
-
-  useEffect(() => {
-    const segment = pathName.split("#")[1]; // Get the segment part from the URL
-
-    if (segment) {
-      const targetSection = document.getElementById(segment);
-
-      if (targetSection) {
-        // Scroll smoothly to the target section
-        targetSection.scrollIntoView({ behavior: "smooth" });
-      }
-    }
-  }, [pathName]);
-}
-
-export enum ProjectType {
-  GAME, OTHERS, WEBDEV, PROGRAMMING, MEDIA
-}
-
-type Project = {
-  name: string;
-  description: string;
-  link?: string;
-  type?: ProjectType;
-};
 
 const projects: Project[] = [
   { name: "DevDocu.com", description: "A new-form documentation site", link: "https://devdocu.com", type: ProjectType.WEBDEV },
@@ -123,7 +96,7 @@ export default function page({}: Props) {
               animate={{ opacity: 1 }} // Animation state
               transition={{ delay: 0.8 }} // Delay the animation for 1 second
             >
-              I'm a web developer
+              I&apos;m a web developer
             </motion.div>
             <motion.div
               initial={{ opacity: 0 }} // Initial state
@@ -134,7 +107,7 @@ export default function page({}: Props) {
               <br />
               <Divider className="my-2 py-1" />
               <small>
-                Here are some things I've dabbled <i>relatively</i> a lot more
+                Here are some things I&apos;ve dabbled <i>relatively</i> a lot more
                 with 📚:
               </small>
               <ul className="font-bold">
@@ -178,7 +151,7 @@ export default function page({}: Props) {
             transition={{ delay: 1.6 }} // Delay the animation for 1 second
           >
             <Divider className="my-2 py-1" />
-            <small>And more stuff I've worked with 📖:</small>
+            <small>And more stuff I&apos;ve worked with 📖:</small>
             <ul className="font-bold">
               <li>Python</li>
               <li>Swift + SwiftUI</li>
@@ -191,12 +164,13 @@ export default function page({}: Props) {
             <Divider className="my-2 py-1" />
             <small>❤️</small>
             <div className="flex flex-wrap gap-2">
-              {hobbies.map((hobby) => {
+              {hobbies.map((hobby, key) => {
                 return (
                   <Chip
                     variant="bordered"
                     className="light text-white"
                     radius="sm"
+                    key={key}
                   >
                     <span className="font-semibold">{hobby}</span>
                   </Chip>
@@ -221,8 +195,8 @@ export default function page({}: Props) {
             </div>
             <Card className="my-4 text-small">
               <CardBody>
-                <b>Dylan's Note:</b> This site is still under construction, but
-                I'm working on it! Here's an ice cream 🍦
+                <b>Dylan&apos;s Note:</b> This site is still under construction, but
+                I&apos;m working on it! Here&apos;s an ice cream 🍦
               </CardBody>
             </Card>
           </motion.div>
@@ -240,7 +214,7 @@ export default function page({}: Props) {
           bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 text-transparent bg-clip-text
           ">PR__OJECTS</motion.div>
           <div className="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-4 gap-4 w-full">
-            {projects.map((project) => {
+            {projects.map((project, key) => {
               return (
                 <Card
                   isFooterBlurred
@@ -256,7 +230,7 @@ export default function page({}: Props) {
                       );
                     }
                   }}
-                  
+                  key={key}
                 >
                   <CardHeader className="font-bold text-xl flex flex-row gap-3">
                     <div className="text-4xl">
