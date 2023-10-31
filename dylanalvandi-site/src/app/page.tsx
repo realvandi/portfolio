@@ -28,7 +28,7 @@ export default function Home() {
     <HomeProvider>
       <main
         className={`relative`}
-        style={{ height: `calc(100vh - ${NAVBAR_HEIGHT})` }}
+        style={{ height: `100vh` }}
       >
         <div
           id="name"
