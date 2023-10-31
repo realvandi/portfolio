@@ -15,17 +15,17 @@ export default function HomeText({}: Props) {
       } transition-all`}
     >
       <div className="flex flex-row  gap-6 w-full justify-center">
-        <a href="https://github.com">
+        <a href="https://github.com/realvandi">
           <Button className="text-2xl" isIconOnly variant="light">
             <FaGithub />
           </Button>
         </a>
-        <a href="https://linkedin.com">
+        <a href="https://www.linkedin.com/in/dylanalvandi/">
           <Button className="text-2xl" isIconOnly variant="light">
             <FaLinkedin />
           </Button>
         </a>
-        <a href="https://gmail.com">
+        <a href="mailto:${geradylanalvandi@gmail.com}">
           <Button className="text-2xl" isIconOnly variant="light">
             <FaRegEnvelope />
           </Button>
