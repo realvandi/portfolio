@@ -1,5 +1,13 @@
 import React from "react";
-import { FaCode, FaGamepad, FaHammer, FaLaptopCode, FaPaintBrush, FaProjectDiagram, FaVideo } from "react-icons/fa";
+import {
+  FaCode,
+  FaGamepad,
+  FaHammer,
+  FaLaptopCode,
+  FaPaintBrush,
+  FaProjectDiagram,
+  FaVideo,
+} from "react-icons/fa";
 import { ProjectType } from "../who/page";
 
 type Props = { type: any };
@@ -7,16 +15,40 @@ type Props = { type: any };
 export default function AlvandiProjectIcon({ type }: Props) {
   switch (type) {
     case ProjectType.GAME:
-      return <FaGamepad />;
+      return (
+        <div className="text-violet-800">
+          <FaGamepad />
+        </div>
+      );
     case ProjectType.MEDIA:
-      return <FaPaintBrush />;
+      return (
+        <div className="text-red-600">
+          <FaPaintBrush />
+        </div>
+      );
     case ProjectType.OTHERS:
-      return <FaProjectDiagram />;
+      return (
+        <div className="text-sky-500">
+          <FaProjectDiagram />
+        </div>
+      );
     case ProjectType.PROGRAMMING:
-      return <FaCode />;
+      return (
+        <div className="text-emerald-500">
+          <FaCode />
+        </div>
+      );
     case ProjectType.WEBDEV:
-      return <FaLaptopCode />;
+      return (
+        <div className="text-pink-700">
+          <FaLaptopCode />
+        </div>
+      );
     default:
-      return <FaProjectDiagram />;
+      return (
+        <div className="text-sky-500">
+          <FaProjectDiagram />
+        </div>
+      );
   }
 }

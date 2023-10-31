@@ -113,7 +113,8 @@ export default function page({}: Props) {
               initial={{ opacity: 0 }} // Initial state
               animate={{ opacity: 1 }} // Animation state
               transition={{ delay: 0.4 }} // Delay the animation for 1 second
-              className="text-left text-3xl font-bold"
+              className="text-left text-3xl font-bold
+               bg-gradient-to-br from-neutral-100 via-neutral-300 to-blue-600 text-transparent bg-clip-text"
             >
               Dylan Alvandi 👋
             </motion.div>
@@ -203,7 +204,8 @@ export default function page({}: Props) {
               })}
             </div>
             <Divider className="my-2 py-1" />
-            <div className="text-3xl font-bold">WHO__?</div>
+            <div className="text-3xl font-bold
+            bg-gradient-to-br from-neutral-100 via-neutral-300 to-blue-600 text-transparent bg-clip-text">WHO__?</div>
             <div className="text-medium">
               Made in <b>Jakarta</b> 🇮🇩. Currently<sup>(2023)</sup>{" "}
               <b>based in Munich</b>. I love{" "}
@@ -234,13 +236,16 @@ export default function page({}: Props) {
           exit={{ opacity: 0 }}
           key="who"
         >
-          <motion.div className="text-5xl font-bold mb-6">PR__OJECTS</motion.div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 w-full">
+          <motion.div className="text-5xl font-bold mb-6
+          bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 text-transparent bg-clip-text
+          ">PR__OJECTS</motion.div>
+          <div className="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-4 gap-4 w-full">
             {projects.map((project) => {
               return (
                 <Card
                   isFooterBlurred
-                  className=" scale-100 hover:scale-105 transition-all cursor-pointer flex items-center justify-center"
+                  className=" scale-100 hover:scale-105 transition-all cursor-pointer flex items-center justify-center light
+                  border-[1px] border-neutral-300"
                   isPressable
                   onClick={(e: any) => {
                     if (project.link) {
@@ -251,15 +256,24 @@ export default function page({}: Props) {
                       );
                     }
                   }}
+                  
                 >
                   <CardHeader className="font-bold text-xl flex flex-row gap-3">
                     <div className="text-4xl">
                       <AlvandiProjectIcon type={project.type}/>
                     </div>
-                    <div>{project.name}</div>
+                    <div className="flex flex-col text-left">
+                      <div>{project.name}</div><div className=" text-sm text-neutral-500 ">{ProjectType[project.type as number]}</div></div>
                   </CardHeader>
                   <Divider></Divider>
-                  <CardBody>{project.description}</CardBody>
+                  <CardBody>
+                    <div className=" text-xs text-neutral-300 font-thin">
+                      Description
+                    </div>
+                    <div>
+                    {project.description}
+                    </div>
+                    </CardBody>
                 </Card>
               );
             })}
