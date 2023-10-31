@@ -5,6 +5,7 @@ import { NAVBAR_HEIGHT } from "../sizes";
 import { AnimatePresence, motion } from "framer-motion";
 import { usePathname, useRouter } from "next/navigation";
 import {
+  Button,
   Card,
   CardBody,
   CardFooter,
@@ -55,6 +56,11 @@ function scrollToSectionBySegment() {
 type Props = {};
 
 export default function page({}: Props) {
+  const handleDivClick = (targetLink : any) => {
+    console.log(targetLink);
+    const newTab = window.open(targetLink, '_blank');
+  };
+
   return (
     <div className="">
       <section id="who" className="">
@@ -194,20 +200,28 @@ export default function page({}: Props) {
       </section>
       <section id="projects" className="">
         <motion.div
-          className="flex flex-col justify-center items-center bg-black"
+          className="flex flex-col justify-center items-center bg-black p-[5%]"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           key="who"
         >
-          <motion.div>PROJECTS</motion.div>
-          <div className="grid grid-cols-3 gap-3 w-full">
+          <motion.div className="text-5xl font-bold mb-6">PROJECTS</motion.div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 w-full">
             {Array.from({ length: 21 }, (_, index) => index).map((i) => {
               return (
-                <Card isFooterBlurred>
-                  <CardHeader>{i}</CardHeader>
-                  <CardBody>{i}</CardBody>
-                  <CardFooter>{i}</CardFooter>
+                <Card
+                  isFooterBlurred
+                  className=" scale-100 hover:scale-105 transition-all cursor-pointer flex items-center justify-center"
+                  isPressable
+                  onClick={(e: any) => {
+                    handleDivClick('https://www.google.com');
+                  }}
+                >
+                  <CardHeader className="font-bold text-xl">
+                    Foo Project Name
+                  </CardHeader>
+                  <CardBody>Bar project description</CardBody>
                 </Card>
               );
             })}
