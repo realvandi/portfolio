@@ -210,16 +210,19 @@ export default function page({}: Props) {
           exit={{ opacity: 0 }}
           key="who"
         >
-          <motion.div className="text-5xl font-bold mb-6
+          <motion.div className="text-5xl font-bold mb-3
           bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 text-transparent bg-clip-text
           ">PR__OJECTS</motion.div>
+          <motion.div className="mb-6 opacity-60">
+            Here are some projects I've worked on, or am working on!
+          </motion.div>
           <div className="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-4 gap-4 w-full">
             {projects.map((project, key) => {
               return (
                 <Card
                   isFooterBlurred
                   className=" scale-100 hover:scale-[102%] transition-all cursor-pointer flex items-center justify-center
-                  ring-0 hover:ring-blue-600 hover:ring-4 p-3"
+                  ring-0 hover:ring-blue-600 hover:ring-4"
                   isPressable
                   onClick={(e: any) => {
                     if (project.link) {
@@ -239,14 +242,14 @@ export default function page({}: Props) {
                     <div className="flex flex-col text-left">
                       <div>{project.name}</div><div className=" text-sm text-neutral-500 ">{ProjectType[project.type as number]}</div></div>
                   </CardHeader>
-                  <CardBody>
+                  <CardFooter>
                     <div className=" text-xs text-neutral-300 font-thin">
                       Description
                     </div>
                     <div>
                     {project.description}
                     </div>
-                    </CardBody>
+                    </CardFooter>
                 </Card>
               );
             })}
