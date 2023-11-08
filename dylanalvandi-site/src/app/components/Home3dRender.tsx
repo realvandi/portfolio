@@ -111,7 +111,6 @@ export default function Home3dRender({ hovered, setHovered }: Props) {
 
   const router = useRouter();
 
-
   const canvasRef = useRef<any>(null);
   const longPressTimer = useRef<any>(null);
 

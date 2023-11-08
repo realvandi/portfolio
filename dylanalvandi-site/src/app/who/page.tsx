@@ -218,8 +218,8 @@ export default function page({}: Props) {
               return (
                 <Card
                   isFooterBlurred
-                  className=" scale-100 hover:scale-105 transition-all cursor-pointer flex items-center justify-center light
-                  border-[1px] border-neutral-300"
+                  className=" scale-100 hover:scale-[102%] transition-all cursor-pointer flex items-center justify-center
+                  ring-0 hover:ring-blue-600 hover:ring-4 p-3"
                   isPressable
                   onClick={(e: any) => {
                     if (project.link) {
@@ -239,7 +239,6 @@ export default function page({}: Props) {
                     <div className="flex flex-col text-left">
                       <div>{project.name}</div><div className=" text-sm text-neutral-500 ">{ProjectType[project.type as number]}</div></div>
                   </CardHeader>
-                  <Divider></Divider>
                   <CardBody>
                     <div className=" text-xs text-neutral-300 font-thin">
                       Description

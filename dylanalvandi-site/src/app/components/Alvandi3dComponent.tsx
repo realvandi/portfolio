@@ -16,7 +16,7 @@ const Spikes = ({ radius, timeHeldDown }: any) => {
   // Calculate positions only once
   const positions = useMemo(
     () =>
-      [...Array(60)].map(() =>
+      [...Array(15)].map(() =>
         new Vector3(
           (Math.random() - 0.5) * 2,
           (Math.random() - 0.5) * 2,
@@ -72,7 +72,7 @@ const BigSpikes = ({ radius, timeHeldDown }: any) => {
   // Calculate positions only once
   const positions = useMemo(
     () =>
-      [...Array(10)].map(() =>
+      [...Array(7)].map(() =>
         new Vector3(
           (Math.random() - 0.5) * 2,
           (Math.random() - 0.5) * 2,
@@ -125,7 +125,7 @@ const SurfaceSpikes = ({ radius, timeHeldDown }: any) => {
   // Calculate positions only once
   const positions = useMemo(
     () =>
-      [...Array(30)].map(() =>
+      [...Array(10)].map(() =>
         new Vector3(
           (Math.random() - 0.5) * 6,
           (Math.random() - 0.5) * 6,
