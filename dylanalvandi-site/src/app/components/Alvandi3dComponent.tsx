@@ -172,7 +172,7 @@ const SurfaceSpikes = ({ radius, timeHeldDown }: any) => {
 
 const GigaSpikes = ({ radius, timeHeldDown }: any) => {
   const spikes = useRef<Mesh[]>([]);
-  const geometry = useMemo(() => new CylinderGeometry(0, 0.2, 8, 2), []);
+  const geometry = useMemo(() => new CylinderGeometry(0, 0.2, 8, 3), []);
 
   // Calculate positions only once
   const positions = useMemo(
@@ -265,14 +265,13 @@ export default function Alvandi3dComponent({ hovered, setHovered }: Props) {
 
       // Update rotation based on delta
       rotationRef.current = {
-        x: rotationRef.current.x + mouseData.deltaMouse.y * (hovered ? 1 : 0.2),
-        y: rotationRef.current.y + mouseData.deltaMouse.x * (hovered ? 1 : 0.2),
+        x: rotationRef.current.x - mouseData.deltaMouse.y * (hovered ? 4 : 1),
+        y: rotationRef.current.y + mouseData.deltaMouse.x * (hovered ? 4 : 1),
       };
 
       // Apply rotation to mesh
       mesh.current.rotation.x =
-        rotationRef.current.x +
-        clock.getElapsedTime() * (0.15);
+        rotationRef.current.x;
       mesh.current.rotation.y =
         rotationRef.current.y +
         clock.getElapsedTime() * (0.1);
