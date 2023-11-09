@@ -109,6 +109,9 @@ export default function Home() {
           <Home3dRender hovered={hovered} setHovered={setHovered} />
         </div>
       </main>
+      <div id="copyright" className="absolute bottom-2 left-2 z-10 text-sm text-neutral-500">
+        © 2023-{(new Date().getFullYear())} Dylan Alvandi 
+      </div>
     </HomeProvider>
   );
 }

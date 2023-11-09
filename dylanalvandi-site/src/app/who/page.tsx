@@ -280,13 +280,13 @@ export default function page({}: Props) {
         <motion.div className="h-[0px] w-full absolute top-10 z-0">
           <img
             src="/dalcurl.svg"
-            style={{ width: "110%", objectFit: "cover"}}
+            style={{ width: "110%", objectFit: "cover" }}
           ></img>
         </motion.div>
         <motion.div className="h-[0px] w-full z-0">
           <img
             src="/dalcurl2.svg"
-            style={{ width: "110%", objectFit: "cover"}}
+            style={{ width: "110%", objectFit: "cover" }}
           ></img>
         </motion.div>
         <section id="projects" className="z-10">
@@ -349,6 +349,12 @@ export default function page({}: Props) {
               })}
             </div>
           </motion.div>
+        </section>
+        <section
+          id="footer"
+          className="w-full p-10 border-t-1 border-opacity-25 border-opacity border-t-neutral-300"
+        >
+          © 2023-{new Date().getFullYear()} Dylan Alvandi
         </section>
       </motion.div>
     </>
