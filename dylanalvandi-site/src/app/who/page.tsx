@@ -66,7 +66,7 @@ export default function page({}: Props) {
     <div className="">
       <section id="who" className="">
         <motion.div
-          className="flex flex-col sm:flex-row justify-center gap-6 bg-pink-600"
+          className="flex flex-col sm:flex-row justify-center gap-6"
           style={{ padding: "5%", paddingTop: `calc(${NAVBAR_HEIGHT} + 5%)` }}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
