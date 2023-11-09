@@ -104,13 +104,19 @@ export default function page({}: Props) {
 
   return (
     <>
-      <motion.div className=""
-      style={{backgroundImage: 'url(/bg-shadows.png)', backgroundPosition: 'center center', backgroundSize: 'cover',
-      backgroundAttachment: 'fixed'}}
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}>
-        <section id="who" className="">
+      <motion.div
+        className=""
+        style={{
+          backgroundImage: "url(/bg-shadows.png)",
+          backgroundPosition: "center center",
+          backgroundSize: "cover",
+          backgroundAttachment: "fixed",
+        }}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+      >
+        <section id="who" className="z-10">
           <motion.div
             className="flex flex-col sm:flex-row justify-center gap-6"
             style={{ padding: "5%", paddingTop: `calc(${NAVBAR_HEIGHT} + 5%)` }}
@@ -182,7 +188,10 @@ export default function page({}: Props) {
                   </li>
                   <li>Firebase</li>
                 </ul>
-                <Card className="my-4 text-small shadow-lg shadow-neutral-900" isBlurred>
+                <Card
+                  className="my-4 text-small shadow-lg shadow-neutral-900"
+                  isBlurred
+                >
                   <CardBody>
                     <b>TL;DR:</b> full stack web development, game development,
                     and design
@@ -216,7 +225,9 @@ export default function page({}: Props) {
                     <Chip
                       variant="light"
                       className="light text-white"
-                      style={{boxShadow: '0px 0px 7px 0px rgb(255,255,255, 0.1)'}}
+                      style={{
+                        boxShadow: "0px 0px 7px 0px rgb(255,255,255, 0.1)",
+                      }}
                       radius="sm"
                       key={key}
                     >
@@ -245,7 +256,10 @@ export default function page({}: Props) {
                 </Link>
                 <small>(I am not affiliated with Dylan)</small>?
               </div>
-              <Card className="my-4 text-small shadow-lg shadow-neutral-900" isBlurred>
+              <Card
+                className="my-4 text-small shadow-lg shadow-neutral-900"
+                isBlurred
+              >
                 <CardBody>
                   <b>Dylan&apos;s Note:</b> This site is still under
                   construction, but I&apos;m working on it! Here&apos;s an ice
@@ -255,7 +269,21 @@ export default function page({}: Props) {
             </motion.div>
           </motion.div>
         </section>
-        <section id="projects" className="">
+        {/* <section>
+          <motion.div
+            className="h-[50px] relative w-full -translate-y-[100px] z-0"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+          ></motion.div>
+        </section> */}
+        <motion.div className="h-[0px] relative w-full -z-0">
+          <img
+            src="/dalcurl.svg"
+            style={{ width: "110%", objectFit: "cover", zIndex: '-100'}}
+          ></img>
+        </motion.div>
+        <section id="projects" className="z-10">
           <motion.div
             className="flex flex-col justify-center items-center p-[5%]"
             initial={{ opacity: 0 }}
@@ -266,11 +294,12 @@ export default function page({}: Props) {
             <motion.div
               className="text-5xl font-bold mb-3
           bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 text-transparent bg-clip-text
+          w-full text-left
           "
             >
               PR__OJECTS
             </motion.div>
-            <motion.div className="mb-6 opacity-60">
+            <motion.div className="mb-6 opacity-60 w-full text-left">
               Here are some projects I've worked on, or am working on!
             </motion.div>
             <div className="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-4 gap-4 w-full">
