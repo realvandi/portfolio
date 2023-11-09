@@ -125,7 +125,7 @@ export default function page({}: Props) {
             exit={{ opacity: 0 }}
             key="who"
           >
-            <motion.div id="col-1" className="w-full sm:w-1/2 h-full">
+            <motion.div id="col-1" className="w-full sm:w-1/2 h-full z-10">
               <motion.div
                 className="text-left text-medium"
                 initial={{ opacity: 0 }} // Initial state
@@ -201,7 +201,7 @@ export default function page({}: Props) {
             </motion.div>
             <motion.div
               id="col-2"
-              className="w-full sm:w-1/2 h-full text-xl"
+              className="w-full sm:w-1/2 h-full text-xl z-10"
               initial={{ opacity: 0 }} // Initial state
               animate={{ opacity: 1 }} // Animation state
               transition={{ delay: 1.6 }} // Delay the animation for 1 second
@@ -277,10 +277,16 @@ export default function page({}: Props) {
             exit={{ opacity: 0 }}
           ></motion.div>
         </section> */}
-        <motion.div className="h-[0px] relative w-full -z-0">
+        <motion.div className="h-[0px] w-full absolute top-10 z-0">
           <img
             src="/dalcurl.svg"
-            style={{ width: "110%", objectFit: "cover", zIndex: '-100'}}
+            style={{ width: "110%", objectFit: "cover"}}
+          ></img>
+        </motion.div>
+        <motion.div className="h-[0px] w-full z-0">
+          <img
+            src="/dalcurl2.svg"
+            style={{ width: "110%", objectFit: "cover"}}
           ></img>
         </motion.div>
         <section id="projects" className="z-10">
