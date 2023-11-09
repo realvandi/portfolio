@@ -187,6 +187,7 @@ export default function Home3dRender({ hovered, setHovered }: Props) {
         onContextMenu={(e) => e.preventDefault()}
         gl={{ alpha: true }}
         className={`${homePhase === 1 ? 'opacity-10' : 'opacity-100'} transition-opacity duration-[3000ms]`}
+        dpr={[0.7,0.9]}
       >
         <ambientLight intensity={0.1} />
         <directionalLight color="blue" position={[0, 0, 5]} />
