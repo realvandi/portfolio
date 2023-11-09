@@ -47,14 +47,22 @@ export default function Home() {
 
     if (textContainer) {
       const textDivs = textContainer.querySelectorAll("div");
+      const numTextDivs = textDivs.length;
+      const screenWidth = window.innerWidth;
+      const screenHeight = window.innerHeight;
 
-      textDivs.forEach((textDiv) => {
-        const randomX = Math.random() * window.innerWidth;
-        const randomY = Math.random() * window.innerHeight;
+      // Calculate the horizontal and vertical spacing between text divs
+      const horizontalSpacing = screenWidth / (numTextDivs + 1);
+      const verticalSpacing = screenHeight / (numTextDivs + 1);
+
+      textDivs.forEach((textDiv, index) => {
+        // Calculate the position for each text div
+        const xPos = (index + 1) * horizontalSpacing;
+        const yPos = (index + 1) * verticalSpacing;
 
         const htmlElement = textDiv as HTMLElement;
-        htmlElement.style.left = `${randomX}px`;
-        htmlElement.style.top = `${randomY}px`;
+        htmlElement.style.left = `${xPos}px`;
+        htmlElement.style.top = `${yPos}px`;
       });
     }
   }, []);
