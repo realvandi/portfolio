@@ -130,7 +130,7 @@ export default function page({}: Props) {
                 animate={{ opacity: 1 }} // Animation state
                 transition={{ delay: 0.4 }} // Delay the animation for 1 second
                 className="text-left text-3xl font-bold
-               bg-gradient-to-br from-neutral-100 via-neutral-300 to-blue-600 text-transparent bg-clip-text"
+               bg-gradient-to-br from-blue-600 via-purple-500 to-blue-600 text-transparent bg-clip-text"
               >
                 Dylan Alvandi 👋
               </motion.div>
