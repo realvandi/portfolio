@@ -177,7 +177,7 @@ const GigaSpikes = ({ radius, timeHeldDown }: any) => {
   // Calculate positions only once
   const positions = useMemo(
     () =>
-      [...Array(2)].map(() =>
+      [...Array(4)].map(() =>
         new Vector3(
           Math.random() - 0.5,
           Math.random() - 0.5,

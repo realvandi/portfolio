@@ -104,9 +104,12 @@ export default function page({}: Props) {
 
   return (
     <>
-      <div className=""
+      <motion.div className=""
       style={{backgroundImage: 'url(/bg-shadows.png)', backgroundPosition: 'center center', backgroundSize: 'cover',
-      backgroundAttachment: 'fixed'}}>
+      backgroundAttachment: 'fixed'}}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}>
         <section id="who" className="">
           <motion.div
             className="flex flex-col sm:flex-row justify-center gap-6"
@@ -179,7 +182,7 @@ export default function page({}: Props) {
                   </li>
                   <li>Firebase</li>
                 </ul>
-                <Card className="my-4 text-small">
+                <Card className="my-4 text-small shadow-lg shadow-neutral-900" isBlurred>
                   <CardBody>
                     <b>TL;DR:</b> full stack web development, game development,
                     and design
@@ -211,8 +214,9 @@ export default function page({}: Props) {
                 {hobbies.map((hobby, key) => {
                   return (
                     <Chip
-                      variant="bordered"
+                      variant="light"
                       className="light text-white"
+                      style={{boxShadow: '0px 0px 7px 0px rgb(255,255,255, 0.1)'}}
                       radius="sm"
                       key={key}
                     >
@@ -224,7 +228,7 @@ export default function page({}: Props) {
               <Divider className="my-2 py-1" />
               <div
                 className="text-3xl font-bold
-            bg-gradient-to-br from-neutral-100 via-neutral-300 to-blue-600 text-transparent bg-clip-text"
+            bg-gradient-to-br from-blue-600 via-teal-600 to-blue-600 text-transparent bg-clip-text"
               >
                 WHO__?
               </div>
@@ -241,7 +245,7 @@ export default function page({}: Props) {
                 </Link>
                 <small>(I am not affiliated with Dylan)</small>?
               </div>
-              <Card className="my-4 text-small">
+              <Card className="my-4 text-small shadow-lg shadow-neutral-900" isBlurred>
                 <CardBody>
                   <b>Dylan&apos;s Note:</b> This site is still under
                   construction, but I&apos;m working on it! Here&apos;s an ice
@@ -311,7 +315,7 @@ export default function page({}: Props) {
             </div>
           </motion.div>
         </section>
-      </div>
+      </motion.div>
     </>
   );
 }
