@@ -34,8 +34,8 @@ export default function HomeText({}: Props) {
 
       <div className="text-lg w-full flex flex-col items-center justify-center">
         <div>- Was the cake really a lie? -</div>
-        <span className="text-sm text-neutral-500">
-          Hold down on the thingy in the middle
+        <span className="text-sm text-neutral-500 text-center ">
+          Hold down on the thingy in the middle, or <br/> play around and find secrets!
         </span>
         <span className="text-xs text-neutral-700">
           (or just use the navigation bar)
