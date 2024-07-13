@@ -37,33 +37,45 @@ const hobbies = [
   "3D modelling",
   "Travel",
   "Trying out new stuff",
-  "Writing documentation(yes, really)",
 ];
 
 const projects: Project[] = [
   {
-    name: "DevDocu.com",
-    description: "A new-form documentation site",
+    name: "Devdocu.com",
+    description: "A POC project for a new form of framework documentation",
     link: "https://devdocu.com",
     type: ProjectType.WEBDEV,
   },
   {
     name: "Quack Rush",
-    description: "3D mobile game developed using Unreal Engine 4",
+    description:
+      "3D mobile game developed using Unreal Engine 4(contact me for more info)",
     type: ProjectType.GAME,
   },
   {
     name: "3D Platformer System",
-    description: "3D platformer movement system developed using Unity",
+    description:
+      "3D platformer movement system developed using Unity(contact me for more info)",
     type: ProjectType.GAME,
   },
   {
     name: "Catboxed",
-    description: "3D mobile game developed using Unity",
+    description:
+      "3D mobile game developed using Unity(contact me for more info)",
     type: ProjectType.GAME,
   },
-  { name: "iPraktikum", description: "TUM project", type: ProjectType.WEBDEV },
-  { name: "JST", description: "TUM project", type: ProjectType.WEBDEV },
+  {
+    name: "iPraktikum",
+    description:
+      "Web development project for B/S/H Werkstatt(contact me for more info)",
+    type: ProjectType.WEBDEV,
+  },
+  {
+    name: "JST",
+    description:
+      "Web development project for Maltego Technologies GmbH(contact me for more info)",
+    type: ProjectType.WEBDEV,
+  },
   {
     name: "Realvandi",
     description: "TikTok content",
@@ -72,15 +84,25 @@ const projects: Project[] = [
   },
   {
     name: "Supervillain",
-    description: "Clothing line",
+    description: "Clothing line(contact me for more info)",
     type: ProjectType.OTHERS,
   },
   {
     name: "C Huffman Tree",
-    description: "Huffman code generator using C",
+    description:
+      "Huffman code generator using C + ASM(contact me for more info)",
     type: ProjectType.PROGRAMMING,
   },
-  { name: "ASM", description: "TUM project", type: ProjectType.PROGRAMMING },
+  {
+    name: "JSON Parser",
+    description: "Assembly Code(contact me for more info)",
+    type: ProjectType.PROGRAMMING,
+  },
+  {
+    name: "Laplace Function",
+    description: "Assembly Code(contact me for more info)",
+    type: ProjectType.PROGRAMMING,
+  },
   {
     name: "dylanalvandi.com",
     description: "Personal portfolio site for Dylan Alvandi (myself)",
@@ -89,8 +111,33 @@ const projects: Project[] = [
   },
   {
     name: "Measure Tool",
-    description: "Personal portfolio site for Dylan Alvandi (myself)",
+    description: "On-screen protractor with image inputs",
     type: ProjectType.WEBDEV,
+    link: "https://github.com/realvandi/measuretool",
+  },
+  {
+    name: "'Squid Game' POC Game",
+    description:
+      "A POC game developed in Unity to experiment with NPCs with ragdoll physics movement(contact me for more info)",
+    type: ProjectType.GAME,
+  },
+  {
+    name: "Tickables",
+    description:
+      "A social media productivity site centered around community checklists, checklists, and roadmaps.",
+    type: ProjectType.WEBDEV,
+    link: "https://tickables.com",
+  },
+  {
+    name: "Sandwich Game",
+    description:
+      "A mobile game developed using Unreal Engine 4 C++ and Blueprints(contact me for more info).",
+    type: ProjectType.GAME,
+  },
+  {
+    name: "Rotting Donuts WebToon",
+    description: "A comic strip series which was released on WebToon.",
+    type: ProjectType.MEDIA,
   },
 ];
 
@@ -308,13 +355,13 @@ export default function page({}: Props) {
             <motion.div className="mb-6 opacity-60 w-full text-left">
               Here are some projects I've worked on, or am working on!
             </motion.div>
-            <div className="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-4 gap-4 w-full">
+            <div className="w-full flex flex-wrap gap-3">
               {projects.map((project, key) => {
                 return (
                   <Card
                     isFooterBlurred
                     className=" scale-100 hover:scale-[102%] transition-all cursor-pointer flex items-center justify-center
-                  ring-0 hover:ring-blue-600 hover:ring-4"
+                  ring-0 hover:ring-blue-600 hover:ring-4 w-[20rem] h-[10rem]"
                     isPressable
                     onClick={(e: any) => {
                       if (project.link) {
@@ -339,10 +386,12 @@ export default function page({}: Props) {
                       </div>
                     </CardHeader>
                     <CardFooter>
-                      <div className=" text-xs text-neutral-300 font-thin">
-                        Description
+                      <div className=" flex flex-col items-start">
+                        <div className=" text-xs text-neutral-300 font-thin">
+                          Description
+                        </div>
+                        <div className=" text-start text-sm">{project.description}</div>
                       </div>
-                      <div>{project.description}</div>
                     </CardFooter>
                   </Card>
                 );
