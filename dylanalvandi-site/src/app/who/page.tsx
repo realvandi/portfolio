@@ -226,6 +226,7 @@ export default function page({}: Props) {
                                     </li>
                                     <li>Next.js</li>
                                     <li>NestJS</li>
+                                    <li>Rust</li>
                                     <li>Spring Boot</li>
                                     <li>Unity C#</li>
                                     <li>Unreal Engine 4 C++ and Blueprints</li>
@@ -269,6 +270,7 @@ export default function page({}: Props) {
                                 <li>C#</li>
                                 <li>PSQL</li>
                                 <li>Flutter</li>
+                                <li></li>
                             </ul>
                             <Divider className="my-2 py-1" />
                             <small>❤️</small>
