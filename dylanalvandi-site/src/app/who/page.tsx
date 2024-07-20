@@ -1,11 +1,9 @@
 "use client";
 
-import React, { Suspense, useEffect, useState } from "react";
+import React from "react";
 import { NAVBAR_HEIGHT } from "../sizes";
-import { AnimatePresence, motion } from "framer-motion";
-import { usePathname, useRouter } from "next/navigation";
+import { motion } from "framer-motion";
 import {
-    Button,
     Card,
     CardBody,
     CardFooter,
@@ -333,16 +331,22 @@ export default function page({}: Props) {
           ></motion.div>
         </section> */}
                 <motion.div className="h-[0px] w-full absolute top-10 z-0">
-                    <img
+                    <Image
                     src="/dalcurl.svg"
+                    width={200}
+                    height={200}
                     style={{ width: "110%", objectFit: "cover" }}
-                ></img>
+                    alt="background-cover-1"
+                ></Image>
                 </motion.div>
                 <motion.div className="h-[0px] w-full z-0">
-                    <img
+                    <Image
+                    width={200}
+                    height={200}
                     src="/dalcurl2.svg"
                     style={{ width: "110%", objectFit: "cover" }}
-                ></img>
+                    alt="background-cover-2"
+                ></Image>
                 </motion.div>
                 <section id="projects" className="z-10">
                     <motion.div
@@ -363,7 +367,7 @@ export default function page({}: Props) {
                         <motion.div className="mb-6 opacity-60 w-full text-left">
                         Here are some projects I've worked on, or am working on!
                     </motion.div>
-                        <div className="w-full flex flex-wrap gap-3">
+                        <div className="w-full flex flex-wrap gap-3 justify-center">
                             {projects.map((project, key) => {
                                 return (
                                     <Card
